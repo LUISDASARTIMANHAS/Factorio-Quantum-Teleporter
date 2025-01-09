@@ -4,21 +4,22 @@ data:extend(
     {
         {
             type = "assembling-machine",
-            name = "quantum-teleporter-portal-entidade",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
+            name = "quantum-teleporter-portal-T1-entidade",
+            icon = path_main .. "graficos/blocos/T2-portal.png",
             icon_size = 128,
             icon_mipmaps = 4,
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
-            max_health = 1500,
+            max_health = 1000,
             crafting_speed = 1,
+            ingredient_count = 3,
             off_when_no_fluid_recipe = true,
-            energy_usage = "20MW",
-            buffer_capacity = "300MW",
-            crafting_categories = {"crafting"},
+            energy_usage = "5MW",
+            crafting_categories = {"t2-portal-parts"},
             -- corpse = "big-remnants",
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
             dying_explosion = "assembling-machine-2-explosion",
+            fixed_recipe = "part-portal",
             alert_icon_shift = {-0.09375, -0.375},
             collision_box = {
                 {-8, -8},
@@ -35,9 +36,9 @@ data:extend(
             energy_source = {
                 type = "electric",
                 usage_priority = "primary-input",
-                buffer_capacity = "100MW",
-                input_flow_limit = "30MW",
-                drain = "20MW"
+                buffer_capacity = "25MW",
+                input_flow_limit = "7MW",
+                drain = "5MW"
             },
             resistances = {
                 {
@@ -84,7 +85,7 @@ data:extend(
                 "player-creation"
             },
             placeable_by = {
-                item = "quantum-teleporter-portal",
+                item = "quantum-teleporter-portal-T2",
                 count = 1
             },
             module_specification = {
@@ -92,17 +93,17 @@ data:extend(
                 module_info_icon_shift = {0, 0.5}
             },
             placeable_position_visualization = {
-                filename = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
+                filename = path_main .. "graficos/blocos/T1-portal.png",
                 priority = "medium",
                 width = 32,
                 height = 32
             },
             working_sound = {
                 sound = {
-                    filename = path_main .. "audio/portal.ogg",
+                    filename = path_main .. "audio/construction.ogg",
                     volume = 0.45
                 },
-                idle_sound = {filename = "audio/portal.ogg", volume = 0.45}
+                idle_sound = {filename = "audio/construction.ogg", volume = 0.45}
             },
             close_sound = {
                 {

@@ -77,31 +77,6 @@ local function check_teleport_equipment_on_respawn(event)
     end
 end
 
-local function teleport_player(player, coords)
-    local armor = player.get_inventory(defines.inventory.character_armor)[1]
-    if armor and armor.valid_for_read and armor.grid then
-        local grid = armor.grid
-        local teleporter = grid.get_contents()["quantum-teleporter-equipment"]
-
-        if teleporter then
-            local energy_available = grid.available_in_batteries
-            local energy_required = 50e6 -- Energia necessária para teletransporte
-
-            if energy_available >= energy_required then
-                grid.drain_energy(energy_required) -- Consome energia
-                player.teleport(coords) -- Realiza o teletransporte
-                player.print("Teletransporte realizado!")
-            else
-                player.print("Energia insuficiente.")
-            end
-        else
-            player.print("Equipamento de teletransporte não encontrado.")
-        end
-    else
-        player.print("Nenhuma armadura equipada.")
-    end
-end
-
 -- teleport 2.0
 local function teleport_cords(event)
     local player = game.players[event.player_index]

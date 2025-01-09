@@ -6,6 +6,7 @@ local eventos = defines.events
 script.on_event(defines.events.on_tick, function(event)
     for _, player in pairs(game.connected_players) do
         local character = player.character
+        
         if character and character.valid then
             local portal = player.surface.find_entities_filtered({
                 name = "quantum-teleporter-portal-entidade",
