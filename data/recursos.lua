@@ -159,7 +159,7 @@ data:extend(
         {
             type = "item",
             name = "part-portal-T1",
-            icon = path_main .. "graficos/blocos/T1-portal-part.png",
+            icon = path_main .. "graficos/itens/part-portal-T1.png",
             icon_size = 128,
             subgroup = "itens",
             order = "Quantum-Teleporter-itens[part-portal-T1]",
@@ -194,7 +194,7 @@ data:extend(
         {
             type = "item",
             name = "part-portal-T2",
-            icon = path_main .. "graficos/blocos/T2-portal-part.png",
+            icon = path_main .. "graficos/itens/part-portal-T2.png",
             icon_size = 128,
             subgroup = "itens",
             order = "Quantum-Teleporter-itens[part-portal-T2]",
