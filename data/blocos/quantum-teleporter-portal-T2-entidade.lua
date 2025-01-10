@@ -7,7 +7,7 @@ data:extend(
             type = "assembling-machine",
             name = "quantum-teleporter-portal-T2-entidade",
             icon = path_main .. "graficos/blocos/T2-portal.png",
-            icon_size = 128,
+            icon_size = 500,
             icon_mipmaps = 4,
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
             max_health = 1000,
