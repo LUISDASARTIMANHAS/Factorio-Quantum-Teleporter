@@ -3,11 +3,10 @@ local path_main = "__Quantum-Teleporter__/"
 data:extend(
     {
         {
-            type = "active-defense-equipment", -- Equipamento compatível com armadura vanilla
+            type = "movement-bonus-equipment",
             name = "quantum-teleporter-equipment",
             categories = {"armor"},
-            -- Desativa comportamento automático
-            automatic = false,
+            energy_consumption = "20MW",
             take_result = "quantum-teleporter-equipment",
             sprite = {
                 filename = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
@@ -27,24 +26,38 @@ data:extend(
                 usage_priority = "secondary-input",
                 drain = "5MW"
             },
-            attack_parameters = {
-                -- Desativa ataques, mas mantém o consumo de energia
-                type = "projectile",
-                -- Altamente ineficiente para evitar uso automático
-                cooldown = 9999999,
-                range = 0,
-                ammo_type = {
-                    category = "bullet",
-                    target_type = "position",
-                    action = {
-                        type = "direct",
-                        action_delivery = {
-                            type = "instant",
-                            target_effects = {}
-                        }
-                    }
-                }
-            },
+            movement_bonus = 0,
+            activate_sound = {filename = path_main .. "audio/portal.ogg", volume = 0.5},
+            deactivate_sound = {filename = "__base__/sound/nightvision-off.ogg", volume = 0.5}
         }
     }
 )
+
+-- usado como base, __base__/prototypes/equipment.lua
+
+-- {
+--     type = "movement-bonus-equipment",
+--     name = "exoskeleton-equipment",
+--     sprite =
+--     {
+--       filename = "__base__/graphics/equipment/exoskeleton-equipment.png",
+--       width = 128,
+--       height = 256,
+--       priority = "medium",
+--       scale = 0.5
+--     },
+--     shape =
+--     {
+--       width = 2,
+--       height = 4,
+--       type = "full"
+--     },
+--     energy_source =
+--     {
+--       type = "electric",
+--       usage_priority = "secondary-input"
+--     },
+--     energy_consumption = "200kW",
+--     movement_bonus = 0.3,
+--     categories = {"armor"}
+--   },

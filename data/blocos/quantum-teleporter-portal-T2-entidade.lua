@@ -1,4 +1,5 @@
 local path_main = "__Quantum-Teleporter__/"
+local gameSounds = "__base__/sound/"
 
 data:extend(
     {
@@ -103,7 +104,7 @@ data:extend(
                     filename = path_main .. "audio/construction.ogg",
                     volume = 0.45
                 },
-                idle_sound = {filename = "audio/construction.ogg", volume = 0.45}
+                idle_sound = {filename = gameSounds .. "nuclear-reactor-2.ogg", volume = 0.45}
             },
             close_sound = {
                 {
