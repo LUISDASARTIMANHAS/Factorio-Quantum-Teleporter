@@ -6,7 +6,7 @@ data:extend(
         {
             type = "assembling-machine",
             name = "quantum-teleporter-portal-entidade",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
+            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
             icon_size = 500,
             icon_mipmaps = 4,
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
@@ -93,10 +93,10 @@ data:extend(
                 module_info_icon_shift = {0, 0.5}
             },
             placeable_position_visualization = {
-                filename = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
+                filename = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
                 priority = "medium",
-                width = 32,
-                height = 32
+                width = 500,
+                height = 500
             },
             working_sound = {
                 sound = {

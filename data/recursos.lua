@@ -120,7 +120,7 @@ data:extend(
         {
             type = "item",
             name = "quantum-teleporter-portal",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
+            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
             icon_size = 500,
             subgroup = "itens",
             order = "Quantum-Teleporter-itens[quantum-teleporter-portal]",

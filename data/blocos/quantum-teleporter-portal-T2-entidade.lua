@@ -12,11 +12,11 @@ data:extend(
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
             max_health = 1000,
             crafting_speed = 1,
-            ingredient_count = 3,
+            ingredient_count = 4,
             off_when_no_fluid_recipe = true,
             energy_usage = "10MW",
             crafting_categories = {"portal-parts"},
-            fixed_recipe = "part-portal-T2",
+            fixed_recipe = "part-portal-T2-recipe",
             -- corpse = "big-remnants",
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
@@ -96,8 +96,8 @@ data:extend(
             placeable_position_visualization = {
                 filename = path_main .. "graficos/blocos/T2-portal.png",
                 priority = "medium",
-                width = 32,
-                height = 32
+                width = 500,
+                height = 500
             },
             working_sound = {
                 sound = {
