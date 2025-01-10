@@ -6,7 +6,7 @@ data:extend(
         {
             type = "assembling-machine",
             name = "quantum-teleporter-portal-T1-entidade",
-            icon = path_main .. "graficos/blocos/T2-portal.png",
+            icon = path_main .. "graficos/blocos/T1-portal.png",
             icon_size = 128,
             icon_mipmaps = 4,
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
@@ -86,7 +86,7 @@ data:extend(
                 "player-creation"
             },
             placeable_by = {
-                item = "quantum-teleporter-portal-T2",
+                item = "quantum-teleporter-portal-T1",
                 count = 1
             },
             module_specification = {

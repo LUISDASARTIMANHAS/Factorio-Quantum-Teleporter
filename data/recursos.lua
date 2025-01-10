@@ -96,7 +96,7 @@ data:extend(
             enabled = false,
             energy_required = 120,
             ingredients = {
-                {type = "item", name = "part-portal", amount = 2500},
+                {type = "item", name = "part-portal-T1", amount = 2500},
                 {type = "item", name = "quantum-teleporter-portal-T1", amount = 1},
                 {type = "item", name = "quantum-processor", amount = 256},
                 {type = "item", name = "tungsten-plate", amount = 5120},
