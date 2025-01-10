@@ -4,8 +4,11 @@ Date: 09/01/2025
   Changes:
     - add multiple stages of portal.
     - add images of multiple stages of portal
+    - add songs of multiple stages of portals
+    - add parts-portal T1, T2
+    - add portals T1, T2
   Bugs Fixed:
-    - a
+    - Error while loading equipment prototype "quantum-teleporter-equipment" (active-defense-equipment): Key "categories" not found in property tree at ROOT.active-defense-equipment.quantum-teleporter-equipment Modifications: Quantum Teleporter
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.4
 Date: 07/01/2025

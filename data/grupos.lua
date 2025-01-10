@@ -31,10 +31,10 @@ data:extend(
 )
 -------------------------------------------------------------------------- quantum-teleporter-category
 
--- -- categorias de receitas
--- data:extend({
---   {
---       type = "recipe-category",
---       name = "inscriber"
---   }
--- })
+-- categorias de receitas
+data:extend({
+  {
+      type = "recipe-category",
+      name = "portal-parts"
+  }
+})

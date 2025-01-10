@@ -14,6 +14,10 @@ data:extend({ {
         {
             type = "unlock-recipe",
             recipe = "quantum-teleporter-equipment-recipe",
+        },
+        {
+            type = "unlock-recipe",
+            recipe = "quantum-teleporter-portal-T2-recipe",
         }
     },
     unit = {
@@ -51,8 +55,16 @@ data:extend({
     {
         {
             type = "unlock-recipe",
-            recipe = "quantum-teleporter-portal-recipe"
+            recipe = "part-portal-T2-recipe"
         },
+        {
+            type = "unlock-recipe",
+            recipe = "quantum-teleporter-portal-T2-recipe"
+        },
+        {
+            type = "unlock-recipe",
+            recipe = "quantum-teleporter-portal-recipe"
+        }
     },
     unit = {
         count = 100,

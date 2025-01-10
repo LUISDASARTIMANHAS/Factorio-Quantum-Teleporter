@@ -15,11 +15,11 @@ data:extend(
             off_when_no_fluid_recipe = true,
             energy_usage = "10MW",
             crafting_categories = {"portal-parts"},
+            fixed_recipe = "part-portal-T2",
             -- corpse = "big-remnants",
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
             dying_explosion = "assembling-machine-2-explosion",
-            fixed_recipe = "part-portal",
             alert_icon_shift = {-0.09375, -0.375},
             collision_box = {
                 {-8, -8},
