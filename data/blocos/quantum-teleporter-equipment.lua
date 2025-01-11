@@ -24,7 +24,6 @@ data:extend(
                 buffer_capacity = "112MW", -- Energia máxima armazenada
                 input_flow_limit = "52MW", -- Velocidade de recarga
                 usage_priority = "secondary-input",
-                drain = "5MW"
             },
             movement_bonus = 0,
             activate_sound = {filename = path_main .. "audio/portal.ogg", volume = 0.5},

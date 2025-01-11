@@ -63,7 +63,7 @@ data:extend(
             energy_required = 120,
             ingredients = {
                 {type = "item", name = "quantum-processor", amount = 128},
-                {type = "item", name = "tungsten-plate", amount = 2.560},
+                {type = "item", name = "tungsten-plate", amount = 2560},
                 {type = "item", name = "superconductor", amount = 512},
                 {type = "item", name = "carbon-fiber", amount = 1024}
             },
@@ -175,9 +175,9 @@ data:extend(
             enabled = true,
             energy_required = 120,
             ingredients = {
-                {type = "item", name = "quantum-processor", amount = 512},
-                {type = "item", name = "tungsten-plate", amount = 10240},
-                {type = "item", name = "superconductor", amount = 2048},
+                {type = "item", name = "quantum-processor", amount = 128},
+                {type = "item", name = "tungsten-plate", amount = 1024},
+                {type = "item", name = "superconductor", amount = 512},
                 {type = "item", name = "carbon-fiber", amount = 4096}
             },
             results = {
@@ -211,7 +211,7 @@ data:extend(
             energy_required = 120,
             ingredients = {
                 {type = "item", name = "quantum-processor", amount = 512},
-                {type = "item", name = "tungsten-plate", amount = 10240},
+                {type = "item", name = "tungsten-plate", amount = 4096},
                 {type = "item", name = "superconductor", amount = 2048},
                 {type = "item", name = "carbon-fiber", amount = 4096}
             },

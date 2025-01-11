@@ -1,5 +1,6 @@
 local path_main = "__Quantum-Teleporter__/"
 local gameSounds = "__base__/sound/"
+local boxSize = 10
 
 data:extend(
     {
@@ -15,35 +16,42 @@ data:extend(
                     {type = "item", name = "quantum-teleporter-portal-T2", amount = 1}
                 }
             },
+            build_grid_size = 2,
             max_health = 1000,
             crafting_speed = 1,
             ingredient_count = 4,
             off_when_no_fluid_recipe = true,
             energy_usage = "10MW",
+            is_military_target = true,
             crafting_categories = {"portal-parts"},
             fixed_recipe = "part-portal-T2-recipe",
             -- corpse = "big-remnants",
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
             dying_explosion = "assembling-machine-2-explosion",
+            next_upgrade = "quantum-teleporter-portal-entidade",
+            -- Não pode ser construido no espaço
+            surface_conditions = {
+                {property = "pressure", min = 10}
+            },
             alert_icon_shift = {-0.09375, -0.375},
             collision_box = {
-                {-8, -8},
-                {10, 10}
+                {-boxSize, -boxSize},
+                {boxSize, boxSize}
             },
             selection_box = {
-                {-8.5, -8.5},
-                {10.5, 10.5}
+                {-boxSize, -boxSize},
+                {boxSize, boxSize}
             },
             drawing_box = {
-                {-8.5, -8.5},
-                {10.5, 10.5}
+                {-boxSize, -boxSize},
+                {boxSize, boxSize}
             },
             energy_source = {
                 type = "electric",
                 usage_priority = "primary-input",
                 buffer_capacity = "100MW",
-                input_flow_limit = "30MW",
+                input_flow_limit = "20MW",
                 drain = "20MW"
             },
             resistances = {

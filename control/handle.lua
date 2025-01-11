@@ -32,21 +32,16 @@ local function toggle_teleport_equipment(event)
         local has_teleporter = grid.get_contents()["quantum-teleporter-equipment"]
 
         if has_teleporter then
-            -- Equipamento foi adicionado ou ainda está presente
+            log("Quantum teleporter equipment detected")
             if not player.gui.screen.teleport_window then
-                -- Cria a janela de teleporte
                 guimaker.create_teleport_window(player)
             end
         else
-            -- Equipamento foi removido
+            log("Quantum teleporter equipment removed")
             guimaker.close_teleport_window(player)
         end
     else
-        -- Armadura removida, remove a janela de teleporte
-        if not armor or not armor.valid_for_read then
-            guimaker.close_teleport_window(player)
-            return
-        end
+        guimaker.close_teleport_window(player)
     end
 end
 
