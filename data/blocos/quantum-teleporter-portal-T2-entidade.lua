@@ -9,7 +9,12 @@ data:extend(
             icon = path_main .. "graficos/blocos/T2-portal.png",
             icon_size = 500,
             icon_mipmaps = 4,
-            minable = {mining_time = 60, result = "quantum-teleporter-portal"},
+            minable = {
+                mining_time = 30,
+                results = {
+                    {type = "item", name = "quantum-teleporter-portal-T2", amount = 1}
+                }
+            },
             max_health = 1000,
             crafting_speed = 1,
             ingredient_count = 4,
@@ -93,18 +98,24 @@ data:extend(
                 module_slots = 0,
                 module_info_icon_shift = {0, 0.5}
             },
-            placeable_position_visualization = {
-                filename = path_main .. "graficos/blocos/T2-portal.png",
-                priority = "medium",
-                width = 500,
-                height = 500
-            },
             working_sound = {
                 sound = {
                     filename = path_main .. "audio/construction.ogg",
                     volume = 0.45
                 },
                 idle_sound = {filename = gameSounds .. "nuclear-reactor-2.ogg", volume = 0.45}
+            },
+            -- renderiza a entidade no mapa
+            graphics_set = {
+                animation = {
+                    filename =  path_main .. "graficos/blocos/T2-portal.png",
+                    priority = "extra-high",
+                    width = 500,
+                    height = 500,
+                    frame_count = 1,
+                    scale = 0.5,
+                    shift = {0.21875, -0.3125}
+                }
             },
             close_sound = {
                 {

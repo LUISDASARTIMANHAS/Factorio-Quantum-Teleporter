@@ -61,3 +61,38 @@ data:extend(
 --     movement_bonus = 0.3,
 --     categories = {"armor"}
 --   },
+
+
+-- usado como base, __base__/prototypes/item.lua
+
+
+-- {
+--     type = "item",
+--     name = "exoskeleton-equipment",
+--     icon = "__base__/graphics/icons/exoskeleton-equipment.png",
+--     place_as_equipment_result = "exoskeleton-equipment",
+--     subgroup = "utility-equipment",
+--     order = "d[exoskeleton]-a[exoskeleton-equipment]",
+--     inventory_move_sound = item_sounds.exoskeleton_inventory_move,
+--     pick_sound = item_sounds.exoskeleton_inventory_pickup,
+--     drop_sound = item_sounds.exoskeleton_inventory_move,
+--     stack_size = 20
+--   },
+
+
+-- usado como base, __base__/prototypes/recipe.lua
+
+
+-- {
+--     type = "recipe",
+--     name = "exoskeleton-equipment",
+--     enabled = false,
+--     energy_required = 10,
+--     ingredients =
+--     {
+--       {type = "item", name = "processing-unit", amount = 10},
+--       {type = "item", name = "electric-engine-unit", amount = 30},
+--       {type = "item", name = "steel-plate", amount = 20}
+--     },
+--     results = {{type="item", name="exoskeleton-equipment", amount=1}}
+--   },

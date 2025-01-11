@@ -16,6 +16,8 @@ data:extend(
             icon = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
             icon_size = 128,
             subgroup = "itens",
+            -- diz pro jogo que o equipamento deve ser colocado com o item especificado
+            place_as_equipment_result = "quantum-teleporter-equipment",
             order = "a[quantum-teleporter-item]",
             stack_size = 1
         },
