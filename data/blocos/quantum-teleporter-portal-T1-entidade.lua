@@ -113,8 +113,6 @@ data:extend(
                     width = 500,
                     height = 500,
                     frame_count = 1,
-                    scale = 0.5,
-                    shift = {0.21875, -0.3125}
                 }
             },
             close_sound = {

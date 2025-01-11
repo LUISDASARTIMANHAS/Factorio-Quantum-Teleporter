@@ -31,7 +31,6 @@ if "%MOD_NAME%"=="" (
     exit /b 1
 )
 
-
 :: Inicializa o repositório Git (se necessário)
 if not exist ".git" (
     git init
