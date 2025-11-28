@@ -1,11 +1,20 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set exclusionsFile=exclusions.txt
+
+set allItemsExclude=
+
+for /f "usebackq delims=" %%x in ("%exclusionsFile%") do (
+    set allItemsExclude=!allItemsExclude! --exclude="%%x"
+)
+echo %allItemsExclude%
+
 :: Carrega as variáveis do arquivo .env
 if exist .env (
     for /f "tokens=* delims=" %%i in (.env) do (
         set "%%i"
-    )
+    ) 
 )
 
 :: Verifica se a chave de API foi carregada
@@ -46,7 +55,7 @@ if "%MOD_NAME%"=="" (
 )
 
 :: Configurações do script
-set STEAM_FILE="D:\SteamLibrary\steamapps\common\Factorio\mods"
+set STEAM_FILE="Z:\SteamLibrary\steamapps\common\Factorio\mods"
 set AUTO_SEND=False
 set ZIP_FILE=%MOD_NAME%_%MOD_VERSION%.zip
 
@@ -57,8 +66,7 @@ if exist "%ZIP_FILE%" (
 
 :: Compacta todos os arquivos na pasta atual em um arquivo ZIP, excluindo .env e outros arquivos indesejados
 echo Compactando o mod em %ZIP_FILE%...
-tar -c -a -v -f "%ZIP_FILE%" --exclude=".env" --exclude="*.cmd" --exclude=".gitignore" --exclude="*.zip" --exclude="*.git" -o "."
-tar -c -a -v -f "%STEAM_FILE%/%ZIP_FILE%" --exclude=".env" --exclude="*.cmd" --exclude=".gitignore" --exclude="*.zip" --exclude="*.git" -o "."
+tar -c -a -v -f "%ZIP_FILE%" %allItemsExclude% -o "."
 
 :: Verifica se o arquivo ZIP foi criado com sucesso
 if not exist "%ZIP_FILE%" (
@@ -66,31 +74,12 @@ if not exist "%ZIP_FILE%" (
     exit /b 1
 )
 
+:: Copia apenas o arquivo ZIP para o diretório do Steam
+Xcopy /Y "%ZIP_FILE%" "%STEAM_FILE%"
+
 :: inicia o sistema de autogit para que seja sincronizado com o git
-start /realtime /min autogit.cmd 
+:: start /realtime /min autogit.cmd 
 
-:: Remover espaços em branco ao redor de AUTO_SEND
-set "AUTO_SEND=%AUTO_SEND: =%"
-
-if /i "%AUTO_SEND%"=="False" (
-    echo Compactacao terminada. Auto publicar desativado. Saindo...
-    pause
-    exit /b 0
-)
-:: Publica o mod no Factorio
-echo Publicando o mod no Factorio...
-curl -X POST ^
-     -F "file=@%ZIP_FILE%" ^
-     -F "name=%MOD_NAME%" ^
-     -F "version=%MOD_VERSION%" ^
-     -H "Authorization: Token %API_KEY%" ^
-     https://mods.factorio.com/api/v2/mods/init_publish
-
-:: Verifica o código de retorno do cURL
-if errorlevel 1 (
-    echo Erro: Falha ao publicar o mod.
-    exit /b 1
-)
-
-echo Mod publicado com sucesso!
+:: abre o jogo para testes
+start steam://rungameid/427520
 exit /b 0

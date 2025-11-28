@@ -1,5 +1,5 @@
 local path_main = "__Quantum-Teleporter__/"
-
+local LDAFunctions = require("__LDA-LIB__/init")
 -- category = "advanced-crafting" maquinas de montagem tier 2 e 3
 -- category = "basic-crafting" maquinas de montagem tier 1
 -- category = "crafting" feito a mão
@@ -7,38 +7,37 @@ local path_main = "__Quantum-Teleporter__/"
 -- category = "centrifuging" feito na centrifuge
 -- category = "portal-parts" feito em portais em construção
 
--- Define itens
+-- quantum-teleporter-equipment
 data:extend(
-    {
+    LDAFunctions.createEquipmentItemWithRecipe(
+        "quantum-teleporter-equipment",
+        "itens",
+        10,
+        "advanced-crafting",
+        120,
         {
-            type = "item",
-            name = "quantum-teleporter-equipment",
-            icon = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
-            icon_size = 128,
-            subgroup = "itens",
-            -- diz pro jogo que o equipamento deve ser colocado com o item especificado
-            place_as_equipment_result = "quantum-teleporter-equipment",
-            order = "a[quantum-teleporter-item]",
-            stack_size = 1
+            {type = "item", name = "supercapacitor", amount = 4096},
+            {type = "item", name = "tungsten-plate", amount = 256},
+            {type = "item", name = "carbon-fiber", amount = 64},
+            {type = "item", name = "quantum-processor", amount = 256}
         },
         {
-            type = "recipe",
-            name = "quantum-teleporter-equipment-recipe",
-            category = "advanced-crafting",
-            enabled = false,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "supercapacitor", amount = 4096},
-                {type = "item", name = "tungsten-plate", amount = 256},
-                {type = "item", name = "carbon-fiber", amount = 64},
-                {type = "item", name = "quantum-processor", amount = 256}
-            },
-            results = {
-                {type = "item", name = "quantum-teleporter-equipment", amount = 1}
-            },
-            alternative_unlock_methods = {"Quantum-Teleporter"}
+            {type = "item", name = "quantum-teleporter-equipment", amount = 1}
+        },
+        "Quantum-Teleporter"
+    )
+)
+
+-- quantum-teleporter-equipment
+data:extend(
+    LDAFunctions.createSmeltingItemWithRecipe(
+        "iron-plate",
+        10,
+        100,
+        {
+            {type = "item", name = "iron-ore", amount = 100},
         }
-    }
+    )
 )
 
 data:extend(
@@ -72,7 +71,7 @@ data:extend(
             },
             maximum_productivity = 1.5,
             allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"},
+            allowed_module_categories = {"productivity", "speed"}
         }
     }
 )
