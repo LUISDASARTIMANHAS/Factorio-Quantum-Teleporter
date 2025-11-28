@@ -29,7 +29,7 @@ data:extend(
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
             dying_explosion = "assembling-machine-2-explosion",
-            next_upgrade = "quantum-teleporter-portal-entidade",
+            -- next_upgrade = "quantum-teleporter-portal-entidade",
             -- Não pode ser construido no espaço
             surface_conditions = {
                 {property = "pressure", min = 10}

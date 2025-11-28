@@ -24,19 +24,7 @@ data:extend(
         {
             {type = "item", name = "quantum-teleporter-equipment", amount = 1}
         },
-        "Quantum-Teleporter"
-    )
-)
-
--- quantum-teleporter-equipment
-data:extend(
-    LDAFunctions.createSmeltingItemWithRecipe(
-        "iron-plate",
-        10,
-        100,
-        {
-            {type = "item", name = "iron-ore", amount = 100},
-        }
+        {"Quantum-Teleporter"}
     )
 )
 

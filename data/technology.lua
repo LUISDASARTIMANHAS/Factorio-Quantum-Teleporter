@@ -13,7 +13,7 @@ data:extend({ {
     {
         {
             type = "unlock-recipe",
-            recipe = "quantum-teleporter-equipment-recipe",
+            recipe = "quantum-teleporter-equipment",
         },
         {
             type = "unlock-recipe",
