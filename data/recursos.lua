@@ -1,5 +1,6 @@
 local path_main = "__Quantum-Teleporter__/"
 local LDAFunctions = require("__LDA-LIB__/init")
+local PATH = LDAFunctions.setBasePath('Quantum-Teleporter')
 -- category = "advanced-crafting" maquinas de montagem tier 2 e 3
 -- category = "basic-crafting" maquinas de montagem tier 1
 -- category = "crafting" feito a mão
@@ -11,7 +12,7 @@ local LDAFunctions = require("__LDA-LIB__/init")
 data:extend(
     LDAFunctions.createEquipmentItemWithRecipe(
         "quantum-teleporter-equipment",
-        "itens",
+        nil,
         10,
         "advanced-crafting",
         120,
