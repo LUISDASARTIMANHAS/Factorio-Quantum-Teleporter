@@ -1,6 +1,6 @@
 {
     "name": "Quantum-Teleporter",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "title": "Quantum Teleporter",
     "author": "LUIS DAS ARTIMANAHS",
     "contact": "example@gmail.com",
@@ -10,8 +10,14 @@
     "dependencies": [
         "base >= 2.0.0",
         "space-age",
-        "LDA-LIB >= 0.0.4"
+        "LDA-LIB >= 0.0.9"
     ],
     "license": "GNU General Public License v3.0",
-    "thumbnail": "thumbnail.png"
+    "thumbnail": "thumbnail.png",
+    "quality_required": true,
+    "space_travel_required": true,
+    "spoiling_required": true,
+    "freezing_required": true,
+    "segmented_units_required": true,
+    "expansion_shaders_required": true
 }

@@ -1,0 +1,1 @@
+Falha ao carregar mods: File __Quantum-Teleporter__/graphics/equipment/quantum-teleporter-equipment.png not found
