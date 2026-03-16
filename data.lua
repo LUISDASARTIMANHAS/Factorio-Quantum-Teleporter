@@ -1,3 +1,10 @@
+-- data.lua
+-- data-updates.lua
+-- data-final-fixes.lua
+-- Aqui você pode usar:
+-- settings.startup
+
+
 -- presets Basicos do mods
 require("graphics.style")
 require("data.recursos")

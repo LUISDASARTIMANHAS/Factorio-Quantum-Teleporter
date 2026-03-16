@@ -1,6 +1,7 @@
 local path_main = "__Quantum-Teleporter__/"
 local LDAFunctions = require("__LDA-LIB__/init")
 local PATH = LDAFunctions.setBasePath('Quantum-Teleporter')
+local config = require("config-loader")
 -- category = "advanced-crafting" maquinas de montagem tier 2 e 3
 -- category = "basic-crafting" maquinas de montagem tier 1
 -- category = "crafting" feito a mão
@@ -17,7 +18,7 @@ data:extend(
         "advanced-crafting",
         120,
         {
-            {type = "item", name = "supercapacitor", amount = 4096},
+            {type = "item", name = "supercapacitor", amount = 4096 * config.getDifficultyMultiplier()},
             {type = "item", name = "tungsten-plate", amount = 256},
             {type = "item", name = "carbon-fiber", amount = 64},
             {type = "item", name = "quantum-processor", amount = 256}
