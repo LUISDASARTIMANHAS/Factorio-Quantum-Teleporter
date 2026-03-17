@@ -14,6 +14,6 @@ require("data.grupos")
 
 -- blocos e qeuipamentos
 require("data.blocos.quantum-teleporter-equipment")
-require("data.blocos.quantum-teleporter-portal-T1-entidade")
-require("data.blocos.quantum-teleporter-portal-T2-entidade")
-require("data.blocos.quantum-teleporter-portal-entidade")
+require("data.blocos.quantum-teleporter-portal-T1")
+require("data.blocos.quantum-teleporter-portal-T2")
+require("data.blocos.quantum-teleporter-portal")

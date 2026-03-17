@@ -1,4 +1,25 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.7
+Date: 16/03/2026
+  Changes:
+    - Updates icon paths and recipes
+    - adds difficulty multiplier support
+    - refactors portal items.
+    - Added integration with LDA-LIB.
+    - Adds difficulty multiplier setting.
+  Bugs Fixed:
+    - updates resource and 
+    - Bug files
+    - recipes
+    - Failed to load mods.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.6
+Date: 11/01/2025
+  Bugs Fixed:
+    - translations, locations
+    - itens values
+    - recipes
+---------------------------------------------------------------------------------------------------
 Version: 0.0.5
 Date: 09/01/2025
   Changes:
@@ -28,7 +49,7 @@ Date: 06/01/2025
   Bugs Fixed:
     -  Recipe has no results: quantum-teleporter-equipment-recipe
     - new properties
-    - "quantum-teleporter-portal-entidade" (assembling-machine): O valor deve ser uma lista ou dicionário na árvore de propriedades em ROOT.assembling-machine.quantum-teleporter-portal-entidade.energy_source.emissions_per_minute
+    - "quantum-teleporter-portal" (assembling-machine): O valor deve ser uma lista ou dicionário na árvore de propriedades em ROOT.assembling-machine.quantum-teleporter-portal.energy_source.emissions_per_minute
     - Error while loading equipment prototype "quantum-teleporter-equipment" (movement-bonus-equipment): Key "type" not found in property tree at ROOT.movement-bonus-equipment.quantum-teleporter-equipment.shape
     - Error while loading equipment prototype "quantum-teleporter-equipment" (movement-bonus-equipment): Key "categories" not found in property tree at ROOT.movement-bonus-equipment.quantum-teleporter-equipment
 ---------------------------------------------------------------------------------------------------

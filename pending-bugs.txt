@@ -1,8 +1,1 @@
-O mod Quantum Teleporter (0.0.7) causou um erro não recuperável.
-Por favor, reporte este erro ao autor do mod.
-
-Error while running event Quantum-Teleporter::on_tick (ID 0)
-Unknown entity name: quantum-teleporter-portal-entidade
-stack traceback:
-	[C]: in function 'find_entities_filtered'
-	__Quantum-Teleporter__/control/portal.lua:11: in function <__Quantum-Teleporter__/control/portal.lua:6>
+no bugs
