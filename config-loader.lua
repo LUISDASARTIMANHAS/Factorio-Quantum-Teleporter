@@ -3,7 +3,7 @@ local Config = {}
 local cache = {}
 
 --- Obtém o multiplicador de dificuldade
---- @return number
+--- @return number 
 function Config.getDifficultyMultiplier()
     return Config.get("difficulty-multiplier")
 end

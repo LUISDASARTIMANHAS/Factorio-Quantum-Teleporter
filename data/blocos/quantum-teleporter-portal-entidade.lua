@@ -6,8 +6,8 @@ data:extend(
     {
         {
             type = "accumulator",
-            name = "quantum-teleporter-portal-entidade",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
+            name = "quantum-teleporter-portal",
+            icon = path_main .. "graphics/icons/quantum-teleporter-portal.png",
             icon_size = 500,
             icon_mipmaps = 4,
             minable = {
@@ -115,7 +115,7 @@ data:extend(
             -- renderiza a entidade no mapa
             graphics_set = {
                 animation = {
-                    filename =  path_main .. "graficos/blocos/quantum-teleporter-portal.png",
+                    filename =  path_main .. "graphics/icons/quantum-teleporter-portal.png",
                     priority = "extra-high",
                     width = 500,
                     height = 500,

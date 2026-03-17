@@ -8,7 +8,7 @@ data:extend(
       -- nome da categoria
       name = "quantum-teleporter-category",
       order = "e",
-      icon = path_main .. "graficos/technology/quantum-teleporter.png",
+      icon = path_main .. "graphics/technology/quantum-teleporter.png",
       icon_size = 512,
       icon_mipmaps = 2
     },

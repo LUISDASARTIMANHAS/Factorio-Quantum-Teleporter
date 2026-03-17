@@ -1,13 +1,18 @@
-local path_main = "__Quantum-Teleporter__/"
 local LDAFunctions = require("__LDA-LIB__/init")
-local PATH = LDAFunctions.setBasePath('Quantum-Teleporter')
+local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
+
 local config = require("config-loader")
+local multiplier = config.getDifficultyMultiplier()
+
+local utils = require("data.utils")
 -- category = "advanced-crafting" maquinas de montagem tier 2 e 3
 -- category = "basic-crafting" maquinas de montagem tier 1
 -- category = "crafting" feito a mão
 -- category = "smelting" feito em fornalhas
 -- category = "centrifuging" feito na centrifuge
 -- category = "portal-parts" feito em portais em construção
+-- createBlockItemWithRecipe(name, subgroup, stack_size, crafted_in, time, ingredients, results,alternative_unlock_methods,isEnabled,pictures,icon_size,pick_sound,drop_sound)
+-- createItemWithRecipe(name, subgroup, stack_size, crafted_in, time, ingredients, results,alternative_unlock_methods,isEnabled,pictures)
 
 -- quantum-teleporter-equipment
 data:extend(
@@ -18,10 +23,10 @@ data:extend(
         "advanced-crafting",
         120,
         {
-            {type = "item", name = "supercapacitor", amount = 4096 * config.getDifficultyMultiplier()},
-            {type = "item", name = "tungsten-plate", amount = 256},
-            {type = "item", name = "carbon-fiber", amount = 64},
-            {type = "item", name = "quantum-processor", amount = 256}
+            {type = "item", name = "supercapacitor", amount = 2048 * multiplier},
+            {type = "item", name = "tungsten-plate", amount = 128 * multiplier},
+            {type = "item", name = "carbon-fiber", amount = 32 * multiplier},
+            {type = "item", name = "quantum-processor", amount = 128 * multiplier}
         },
         {
             {type = "item", name = "quantum-teleporter-equipment", amount = 1}
@@ -31,186 +36,80 @@ data:extend(
 )
 
 data:extend(
-    {
-        -- Item do portal
+    utils.createBlockItem(
+        "quantum-teleporter-portal-T1",
+        -- ingredients
         {
-            type = "item",
-            name = "quantum-teleporter-portal-T1",
-            icon = path_main .. "graficos/blocos/T1-portal.png",
-            icon_size = 500,
-            subgroup = "itens",
-            order = "Quantum-Teleporter-itens[quantum-teleporter-portal-T1]",
-            place_result = "quantum-teleporter-portal-T1-entidade",
-            stack_size = 1
+            {type = "item", name = "quantum-processor", amount = 128 * multiplier},
+            {type = "item", name = "tungsten-plate", amount = 2560 * multiplier},
+            {type = "item", name = "superconductor", amount = 512 * multiplier},
+            {type = "item", name = "carbon-fiber", amount = 1024 * multiplier}
         },
-        -- Receita do portal
-        {
-            type = "recipe",
-            name = "quantum-teleporter-portal-T1-recipe",
-            category = "advanced-crafting",
-            enabled = true,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "quantum-processor", amount = 128},
-                {type = "item", name = "tungsten-plate", amount = 2560},
-                {type = "item", name = "superconductor", amount = 512},
-                {type = "item", name = "carbon-fiber", amount = 1024}
-            },
-            results = {
-                {type = "item", name = "quantum-teleporter-portal-T1", amount = 1}
-            },
-            maximum_productivity = 1.5,
-            allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"}
-        }
-    }
+        nil,
+        true
+    )
 )
 
 data:extend(
-    {
-        -- Item do portal T2
+    utils.createBlockItem(
+        "quantum-teleporter-portal-T2",
+        -- ingredients
         {
-            type = "item",
-            name = "quantum-teleporter-portal-T2",
-            icon = path_main .. "graficos/blocos/T2-portal.png",
-            icon_size = 500,
-            subgroup = "itens",
-            order = "Quantum-Teleporter-itens[quantum-teleporter-portal-T2]",
-            place_result = "quantum-teleporter-portal-T2-entidade",
-            stack_size = 1
+            {type = "item", name = "part-portal-T1", amount = 2500 * multiplier},
+            {type = "item", name = "quantum-teleporter-portal-T1", amount = 1},
+            {type = "item", name = "quantum-processor", amount = 256 * multiplier},
+            {type = "item", name = "tungsten-plate", amount = 5120 * multiplier},
+            {type = "item", name = "superconductor", amount = 1024 * multiplier},
+            {type = "item", name = "carbon-fiber", amount = 2048 * multiplier}
         },
-        -- Receita do portal T2
-        {
-            type = "recipe",
-            name = "quantum-teleporter-portal-T2-recipe",
-            category = "advanced-crafting",
-            enabled = false,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "part-portal-T1", amount = 2500},
-                {type = "item", name = "quantum-teleporter-portal-T1", amount = 1},
-                {type = "item", name = "quantum-processor", amount = 256},
-                {type = "item", name = "tungsten-plate", amount = 5120},
-                {type = "item", name = "superconductor", amount = 1024},
-                {type = "item", name = "carbon-fiber", amount = 2048}
-            },
-            results = {
-                {type = "item", name = "quantum-teleporter-portal-T2", amount = 1}
-            },
-            maximum_productivity = 1.5,
-            allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"},
-            alternative_unlock_methods = {"Quantum-Teleporter"}
-        }
-    }
+        {"Quantum-Teleporter"},
+        false
+    )
 )
 
 data:extend(
-    {
-        --  definindo o item Portal
+    utils.createBlockItem(
+        "quantum-teleporter-portal",
+        -- ingredients
         {
-            type = "item",
-            name = "quantum-teleporter-portal",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
-            icon_size = 500,
-            subgroup = "itens",
-            order = "Quantum-Teleporter-itens[quantum-teleporter-portal]",
-            place_result = "quantum-teleporter-portal-entidade",
-            stack_size = 1
+            {type = "item", name = "part-portal-T2", amount = 5000 * multiplier},
+            {type = "item", name = "quantum-teleporter-portal-T2", amount = 1},
+            {type = "item", name = "quantum-processor", amount = 512 * multiplier},
+            {type = "item", name = "tungsten-plate", amount = 10240 * multiplier},
+            {type = "item", name = "superconductor", amount = 2048 * multiplier},
+            {type = "item", name = "carbon-fiber", amount = 4096 * multiplier}
         },
-        -- Receita do portal
-        {
-            type = "recipe",
-            name = "quantum-teleporter-portal-recipe",
-            category = "advanced-crafting",
-            enabled = false,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "part-portal-T2", amount = 5000},
-                {type = "item", name = "quantum-teleporter-portal-T2", amount = 1},
-                {type = "item", name = "quantum-processor", amount = 512},
-                {type = "item", name = "tungsten-plate", amount = 10240},
-                {type = "item", name = "superconductor", amount = 2048},
-                {type = "item", name = "carbon-fiber", amount = 4096}
-            },
-            results = {
-                {type = "item", name = "quantum-teleporter-portal", amount = 1}
-            },
-            maximum_productivity = 1.5,
-            allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"},
-            alternative_unlock_methods = {"Quantum-Teleporter"}
-        }
-    }
+        {"Quantum-Teleporter"},
+        false
+    )
 )
 
 data:extend(
-    {
-        -- Item do parte de constução do portal
+    utils.createPortalPartsItem(
+        "part-portal-T1",
+        -- ingredients
         {
-            type = "item",
-            name = "part-portal-T1",
-            icon = path_main .. "graficos/itens/part-portal-T1.png",
-            icon_size = 128,
-            subgroup = "itens",
-            order = "Quantum-Teleporter-itens[part-portal-T1]",
-            stack_size = 10
+            {type = "item", name = "quantum-processor", amount = 128},
+            {type = "item", name = "tungsten-plate", amount = 1024},
+            {type = "item", name = "superconductor", amount = 512},
+            {type = "item", name = "carbon-fiber", amount = 4096}
         },
-        -- Receita do parte de constução do portal
-        {
-            type = "recipe",
-            name = "part-portal-T1-recipe",
-            category = "portal-parts",
-            enabled = true,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "quantum-processor", amount = 128},
-                {type = "item", name = "tungsten-plate", amount = 1024},
-                {type = "item", name = "superconductor", amount = 512},
-                {type = "item", name = "carbon-fiber", amount = 4096}
-            },
-            results = {
-                {type = "item", name = "part-portal-T1", amount = 1}
-            },
-            maximum_productivity = 2,
-            allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"}
-        }
-    }
+        {"Quantum-Teleporter"},
+        true
+    )
 )
 
 data:extend(
-    {
-        -- Item de parte de constução do portal
+    utils.createPortalPartsItem(
+        "part-portal-T2",
+        -- ingredients
         {
-            type = "item",
-            name = "part-portal-T2",
-            icon = path_main .. "graficos/itens/part-portal-T2.png",
-            icon_size = 128,
-            subgroup = "itens",
-            order = "Quantum-Teleporter-itens[part-portal-T2]",
-            stack_size = 10
+            {type = "item", name = "quantum-processor", amount = 512},
+            {type = "item", name = "tungsten-plate", amount = 4096},
+            {type = "item", name = "superconductor", amount = 2048},
+            {type = "item", name = "carbon-fiber", amount = 4096}
         },
-        -- Receita do parte de constução do portal
-        {
-            type = "recipe",
-            name = "part-portal-T2-recipe",
-            category = "portal-parts",
-            enabled = false,
-            energy_required = 120,
-            ingredients = {
-                {type = "item", name = "quantum-processor", amount = 512},
-                {type = "item", name = "tungsten-plate", amount = 4096},
-                {type = "item", name = "superconductor", amount = 2048},
-                {type = "item", name = "carbon-fiber", amount = 4096}
-            },
-            results = {
-                {type = "item", name = "part-portal-T2", amount = 1}
-            },
-            maximum_productivity = 2,
-            allow_quality = true,
-            allowed_module_categories = {"productivity", "speed"},
-            alternative_unlock_methods = {"Quantum-Teleporter"}
-        }
-    }
+        {"Quantum-Teleporter"},
+        true
+    )
 )

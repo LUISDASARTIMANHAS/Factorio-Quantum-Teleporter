@@ -6,8 +6,8 @@ data:extend(
     {
         {
             type = "assembling-machine",
-            name = "quantum-teleporter-portal-T2-entidade",
-            icon = path_main .. "graficos/blocos/T2-portal.png",
+            name = "quantum-teleporter-portal-T2",
+            icon = path_main .. "graphics/icons/quantum-teleporter-portal-T2.png",
             icon_size = 500,
             icon_mipmaps = 4,
             minable = {
@@ -24,7 +24,7 @@ data:extend(
             energy_usage = "10MW",
             is_military_target = true,
             crafting_categories = {"portal-parts"},
-            fixed_recipe = "part-portal-T2-recipe",
+            fixed_recipe = "part-portal-T2",
             -- corpse = "big-remnants",
             corpse = "assembling-machine-2-remnants",
             -- dying_explosion = "big-explosion",
@@ -116,7 +116,7 @@ data:extend(
             -- renderiza a entidade no mapa
             graphics_set = {
                 animation = {
-                    filename =  path_main .. "graficos/blocos/T2-portal.png",
+                    filename =  path_main .. "graphics/entities/quantum-teleporter-portal-T2.png",
                     priority = "extra-high",
                     width = 500,
                     height = 500,

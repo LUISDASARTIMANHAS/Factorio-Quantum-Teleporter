@@ -3,7 +3,7 @@ local path_main = "__Quantum-Teleporter__/"
 data:extend({ {
     type = "technology",
     name = "Quantum-Teleporter",
-    icon = path_main.. "graficos/technology/technology-teleporter-equipment.png",
+    icon = path_main.. "graphics/technology/technology-teleporter-equipment.png",
     icon_size = 126,
     icon_mipmaps = 4,
     prerequisites = {
@@ -17,7 +17,7 @@ data:extend({ {
         },
         {
             type = "unlock-recipe",
-            recipe = "quantum-teleporter-portal-T2-recipe",
+            recipe = "quantum-teleporter-portal-T2",
         }
     },
     unit = {
@@ -45,7 +45,7 @@ data:extend({
     {
     type = "technology",
     name = "Quantum-Teleporter-Portal",
-    icon = path_main.. "graficos/technology/technology-portal.png",
+    icon = path_main.. "graphics/technology/technology-portal.png",
     icon_size = 128,
     icon_mipmaps = 4,
     prerequisites = {
@@ -55,15 +55,15 @@ data:extend({
     {
         {
             type = "unlock-recipe",
-            recipe = "part-portal-T2-recipe"
+            recipe = "part-portal-T2"
         },
         {
             type = "unlock-recipe",
-            recipe = "quantum-teleporter-portal-T2-recipe"
+            recipe = "quantum-teleporter-portal-T2"
         },
         {
             type = "unlock-recipe",
-            recipe = "quantum-teleporter-portal-recipe"
+            recipe = "quantum-teleporter-portal"
         }
     },
     unit = {

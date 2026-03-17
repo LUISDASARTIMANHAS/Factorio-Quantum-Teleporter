@@ -9,7 +9,7 @@ data:extend(
             energy_consumption = "20MW",
             take_result = "quantum-teleporter-equipment",
             sprite = {
-                filename = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
+                filename = path_main .. "graphics/icons/quantum-teleporter-equipment-128.png",
                 width = 128,
                 height = 128,
                 priority = "medium"
