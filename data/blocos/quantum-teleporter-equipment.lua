@@ -12,10 +12,11 @@ data:extend(
             type = "movement-bonus-equipment",
             name = "quantum-teleporter-equipment",
             categories = {"armor"},
+            icon_size = 128,
             energy_consumption = "20MW",
             take_result = "quantum-teleporter-equipment",
             sprite = {
-                filename = PATH .. "graphics/icons/quantum-teleporter-equipment-128.png",
+                filename = PATH .. "graphics/icons/quantum-teleporter-equipment.png",
                 width = 128,
                 height = 128,
                 priority = "medium"

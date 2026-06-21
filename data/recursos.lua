@@ -31,7 +31,7 @@ data:extend(
         {
             {type = "item", name = "quantum-teleporter-equipment", amount = 1}
         },
-        {"Quantum-Teleporter"}
+        {"quantum-teleporter"}
     )
 )
 
@@ -62,7 +62,7 @@ data:extend(
             {type = "item", name = "superconductor", amount = 1024 * multiplier},
             {type = "item", name = "carbon-fiber", amount = 2048 * multiplier}
         },
-        {"Quantum-Teleporter"},
+        {"quantum-teleporter"},
         false
     )
 )
@@ -79,7 +79,7 @@ data:extend(
             {type = "item", name = "superconductor", amount = 2048 * multiplier},
             {type = "item", name = "carbon-fiber", amount = 4096 * multiplier}
         },
-        {"Quantum-Teleporter"},
+        {"quantum-teleporter"},
         false
     )
 )
@@ -94,7 +94,7 @@ data:extend(
             {type = "item", name = "superconductor", amount = 512},
             {type = "item", name = "carbon-fiber", amount = 4096}
         },
-        {"Quantum-Teleporter"},
+        {"quantum-teleporter"},
         true
     )
 )
@@ -109,7 +109,7 @@ data:extend(
             {type = "item", name = "superconductor", amount = 2048},
             {type = "item", name = "carbon-fiber", amount = 4096}
         },
-        {"Quantum-Teleporter"},
+        {"quantum-teleporter"},
         true
     )
 )

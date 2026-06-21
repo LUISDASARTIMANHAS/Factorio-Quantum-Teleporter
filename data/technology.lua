@@ -51,7 +51,7 @@ data:extend(
                 {"cryogenic-science-pack", 1}
             },
             {
-                "Quantum-Teleporter"
+                "quantum-teleporter"
             },
             {"part-portal-T2", "quantum-teleporter-portal-T2", "quantum-teleporter-portal"},
             30,

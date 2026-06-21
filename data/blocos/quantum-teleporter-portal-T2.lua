@@ -5,7 +5,7 @@ local LDAUtils = LDAFunctions.utils
 local LDAUtilsAnimations = LDAFunctions.utilsAnimations
 local LDAUtilsEnergySource = LDAFunctions.utilsEnergySource
 local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
-local defaultFilename = PATH .. "graphics/entities/quantum-teleporter-portal-T1"
+local defaultFilename = PATH .. "graphics/entities/quantum-teleporter-portal-T2"
 local defaultIconSize = 512
 -- LDA.utils.createBoundingBox(x, y)
 -- LDA.utilsEnergySource.createElectricEnergySource(usage_priority, buffer_capacity, input_flow_limit, output_flow_limit, emissions_per_minute, render_no_power_icon, render_no_network_icon, params)
@@ -22,7 +22,7 @@ data:extend(
         {
             type = "assembling-machine",
             name = "quantum-teleporter-portal-T2",
-            icon = PATH .. "graphics/icons/quantum-teleporter-portal-T2.png",
+            icon = PATH .. "graphics/entities/quantum-teleporter-portal-T2.png",
             icon_size = defaultIconSize,
             icon_mipmaps = 4,
             minable = {
