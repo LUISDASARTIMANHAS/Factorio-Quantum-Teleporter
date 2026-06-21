@@ -1,14 +1,29 @@
-local path_main = "__Quantum-Teleporter__/"
 local gameSounds = "__base__/sound/"
 local boxSize = 10
+local LDAFunctions = require("__LDA-LIB__/init")
+local LDAUtils = LDAFunctions.utils
+local LDAUtilsAnimations = LDAFunctions.utilsAnimations
+local LDAUtilsEnergySource = LDAFunctions.utilsEnergySource
+local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
+local defaultFilename = PATH .. "graphics/entities/quantum-teleporter-portal-T1"
+local defaultIconSize = 512
+-- LDA.utils.createBoundingBox(x, y)
+-- LDA.utilsEnergySource.createElectricEnergySource(usage_priority, buffer_capacity, input_flow_limit, output_flow_limit, emissions_per_minute, render_no_power_icon, render_no_network_icon, params)
+-- LDA.utils.getAudio(filename, volume)
+-- LDA.utils.getSequentialAudioList(base_filename, start_index, end_index, volume)
+-- LDA.utils.createResistance(resistenceType, percent)
+-- LDA.utils.getFullResistance(percent)
+-- LDA.utils.createModuleSpec(slots, icon_shift)
+-- LDA.utilsAnimations.createAnimation(layers)
+-- LDA.utilsAnimations.createAnimationLayer(filename, width, height, hr_scale, shift, draw_as_shadow, custom_props)
 
 data:extend(
     {
         {
             type = "accumulator",
             name = "quantum-teleporter-portal",
-            icon = path_main .. "graphics/icons/quantum-teleporter-portal.png",
-            icon_size = 500,
+            icon = PATH .. "graphics/icons/quantum-teleporter-portal.png",
+            icon_size = defaultIconSize,
             icon_mipmaps = 4,
             minable = {
                 mining_time = 30,
@@ -34,50 +49,26 @@ data:extend(
                 {property = "pressure", min = 10}
             },
             alert_icon_shift = {-0.09375, -0.375},
-            collision_box = {
-                {-boxSize, -boxSize},
-                {boxSize, boxSize}
-            },
-            selection_box = {
-                {-boxSize, -boxSize},
-                {boxSize, boxSize}
-            },
-            drawing_box = {
-                {-boxSize, -boxSize},
-                {boxSize, boxSize}
-            },
-            energy_source = {
-                type = "electric",
-                usage_priority = "primary-input",
-                buffer_capacity = "200MW",
-                input_flow_limit = "30MW",
-                drain = "20MW"
-            },
+            collision_box = LDAUtils.createBoundingBox(boxSize, boxSize),
+            selection_box = LDAUtils.createBoundingBox(boxSize, boxSize),
+            drawing_box = LDAUtils.createBoundingBox(boxSize, boxSize),
+            energy_source = LDAUtilsEnergySource.createElectricEnergySource(
+                "primary-input",
+                "200MW",
+                "30kW",
+                nil,
+                0,
+                false,
+                false,
+                {drain = "20MW"}
+            ),
             resistances = {
-                {
-                    type = "fire",
-                    percent = 70
-                },
-                {
-                    type = "physical",
-                    percent = 100
-                },
-                {
-                    type = "impact",
-                    percent = 100
-                },
-                {
-                    type = "electric",
-                    percent = 5
-                },
-                {
-                    type = "explosion",
-                    percent = 97
-                },
-                {
-                    type = "laser",
-                    percent = 100
-                }
+                LDAUtils.createResistance("fire", 70),
+                LDAUtils.createResistance("physical", 100),
+                LDAUtils.createResistance("impact", 100),
+                LDAUtils.createResistance("electric", 5),
+                LDAUtils.createResistance("explosion", 97),
+                LDAUtils.createResistance("laser", 100)
             },
             damaged_trigger_effect = {
                 entity_name = "spark-explosion",
@@ -101,43 +92,26 @@ data:extend(
                 item = "quantum-teleporter-portal",
                 count = 1
             },
-            module_specification = {
-                module_slots = 0,
-                module_info_icon_shift = {0, 0.5}
-            },
+            module_specification = LDAUtils.createModuleSpec(0, 0.5),
             working_sound = {
-                sound = {
-                    filename = path_main .. "audio/portal.ogg",
-                    volume = 0.45
-                },
-                idle_sound = {filename = gameSounds .. "nuclear-reactor-2.ogg", volume = 0.45}
+                sound = LDAUtils.getAudio(PATH .. "audio/portal", 0.45),
+                idle_sound = LDAUtils.getAudio(gameSounds .. "nuclear-reactor-2")
             },
             -- renderiza a entidade no mapa
             graphics_set = {
-                animation = {
-                    filename =  path_main .. "graphics/icons/quantum-teleporter-portal.png",
-                    priority = "extra-high",
-                    width = 500,
-                    height = 500,
-                    frame_count = 1,
-                }
+                animation = LDAUtilsAnimations.createAnimation(
+                    LDAUtilsAnimations.createAnimationLayer(defaultFilename, defaultIconSize, defaultIconSize)
+                )
             },
             close_sound = {
-                {
-                    filename = "__base__/sound/machine-close.ogg",
-                    volume = 0.5
-                }
+                LDAUtils.getAudio(gameSounds .. "machine-close")
             },
             open_sound = {
-                {
-                    filename = "__base__/sound/machine-open.ogg",
-                    volume = 0.5
-                }
+                LDAUtils.getAudio(gameSounds .. "machine-open")
             }
         }
     }
 )
-
 
 -- usado como base, __base__/prototypes/item.lua
 -- {
@@ -221,9 +195,9 @@ data:extend(
 --       max_sounds_per_type = 3,
 --       audible_distance_modifier = 0.5
 --     },
-  
+
 --     circuit_connector = circuit_connector_definitions["accumulator"],
 --     circuit_wire_max_distance = default_circuit_wire_max_distance,
-  
+
 --     default_output_signal = {type = "virtual", name = "signal-A"}
 --   }

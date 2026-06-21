@@ -13,6 +13,12 @@ data:extend(
             name = "teleported-sound",
             filename = path_main .. "audio/teleported.ogg",
             volume = 1.0
+        },
+        {
+            type = "sound",
+            name = "portal-sound",
+            filename = path_main .. "audio/portal.ogg",
+            volume = 1.0
         }
     }
 )

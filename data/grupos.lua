@@ -1,40 +1,24 @@
-local path_main = "__Quantum-Teleporter__/"
+local LDAFunctions = require("__LDA-LIB__/init")
+local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
+-- LDA.createItemGroup(group_name, group_order, icon_size, subgroups, icon_mipmaps)
+
+local subgroups = {
+  "component",
+  "itens",
+  "equipment"
+}
 
 data:extend(
-  {
-    -------------------------------------------------------------------------- quantum-teleporter-category
-    {
-      type = "item-group",
-      -- nome da categoria
-      name = "quantum-teleporter-category",
-      order = "e",
-      icon = path_main .. "graphics/technology/quantum-teleporter.png",
-      icon_size = 512,
-      icon_mipmaps = 2
-    },
-    {
-      type = "item-subgroup",
-      -- nome usado para definir o grupo dos itens
-      name = "itens",
-      -- indexando o grupo a categoria
-      group = "quantum-teleporter-category",
-      -- ordem de A a Z e de cima para baixo para organização dos grupos "modname-name"
-      order = "quantum-teleporter-itens"
-    },
-    {
-      type = "item-subgroup",
-      name = "component",
-      group = "quantum-teleporter-category",
-      order = "quantum-teleporter-component"
-    }
-  }
+    LDAFunctions.createItemGroup("quantum-teleporter-category", "q", 512, subgroups, 2)
 )
 -------------------------------------------------------------------------- quantum-teleporter-category
 
 -- categorias de receitas
-data:extend({
+data:extend(
   {
+    {
       type = "recipe-category",
       name = "portal-parts"
+    }
   }
-})
+)

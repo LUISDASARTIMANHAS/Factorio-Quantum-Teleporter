@@ -1,4 +1,10 @@
-local path_main = "__Quantum-Teleporter__/"
+local LDAFunctions = require("__LDA-LIB__/init")
+local LDAUtils = LDAFunctions.utils
+local LDAUtilsEnergySource = LDAFunctions.utilsEnergySource
+local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
+-- LDA.utilsEnergySource.createElectricEnergySource(usag
+-- LDA.utils.getAudio(filename, volume)
+-- LDA.utils.getSequentialAudioList(base_filename, start_index, end_index, volume)
 
 data:extend(
     {
@@ -9,7 +15,7 @@ data:extend(
             energy_consumption = "20MW",
             take_result = "quantum-teleporter-equipment",
             sprite = {
-                filename = path_main .. "graphics/icons/quantum-teleporter-equipment-128.png",
+                filename = PATH .. "graphics/icons/quantum-teleporter-equipment-128.png",
                 width = 128,
                 height = 128,
                 priority = "medium"
@@ -19,15 +25,18 @@ data:extend(
                 width = 2,
                 height = 2
             },
-            energy_source = {
-                type = "electric",
-                buffer_capacity = "112MW", -- Energia máxima armazenada
-                input_flow_limit = "52MW", -- Velocidade de recarga
-                usage_priority = "secondary-input",
-            },
+            energy_source = LDAUtilsEnergySource.createElectricEnergySource(
+                "secondary-input",
+                "112MW",
+                "52kW",
+                nil,
+                0,
+                false,
+                false
+            ),
             movement_bonus = 0,
-            activate_sound = {filename = path_main .. "audio/portal.ogg", volume = 0.5},
-            deactivate_sound = {filename = "__base__/sound/nightvision-off.ogg", volume = 0.5}
+            activate_sound = LDAUtils.getAudio("audio/portal.ogg"),
+            deactivate_sound = LDAUtils.getAudio("__base__/sound/nightvision-off.ogg")
         }
     }
 )

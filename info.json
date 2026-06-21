@@ -1,6 +1,6 @@
 {
     "name": "Quantum-Teleporter",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "title": "Quantum Teleporter",
     "author": "LUIS DAS ARTIMANAHS",
     "contact": "example@gmail.com",
@@ -10,7 +10,7 @@
     "dependencies": [
         "base >= 2.0.0",
         "space-age",
-        "LDA-LIB >= 0.0.9"
+        "LDA-LIB >= 0.0.12"
     ],
     "license": "GNU General Public License v3.0",
     "thumbnail": "thumbnail.png",
