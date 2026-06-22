@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.8
+Date: 21/06/2026
+  Changes:
+    - Updates icon paths and recipes
+    - updated graphics and performance
+    - updated integration with LDA-LIB.
+  Bugs Fixed:
+    - updates resource and 
+    - Bug files
+    - recipes
+    - Failed to load mods.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.7
 Date: 16/03/2026
   Changes:

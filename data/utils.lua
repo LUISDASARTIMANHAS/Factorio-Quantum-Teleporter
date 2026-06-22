@@ -27,7 +27,7 @@ function functions.createBlockItem(name, ingredients, alternative_unlock_methods
         alternative_unlock_methods,
         isEnabled,
         nil,
-        500
+        512
     )
 end
 

@@ -5,7 +5,7 @@ local LDAUtils = LDAFunctions.utils
 local LDAUtilsAnimations = LDAFunctions.utilsAnimations
 local LDAUtilsEnergySource = LDAFunctions.utilsEnergySource
 local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
-local defaultFilename = PATH .. "graphics/entities/quantum-teleporter-portal-T1"
+local defaultFilename = PATH .. "graphics/icons/quantum-teleporter-portal-T1"
 local defaultIconSize = 512
 -- LDA.utils.createBoundingBox(x, y)
 -- LDA.utilsEnergySource.createElectricEnergySource(usage_priority, buffer_capacity, input_flow_limit, output_flow_limit, emissions_per_minute, render_no_power_icon, render_no_network_icon, params)
@@ -22,7 +22,7 @@ data:extend(
         {
             type = "assembling-machine",
             name = "quantum-teleporter-portal-T1",
-            icon = PATH .. "graphics/icons/quantum-teleporter-portal-T1.png",
+            icon = defaultFilename .. ".png",
             icon_size = defaultIconSize,
             icon_mipmaps = 4,
             minable = {
@@ -69,7 +69,7 @@ data:extend(
                 LDAUtils.createResistance("impact", 100),
                 LDAUtils.createResistance("electric", 5),
                 LDAUtils.createResistance("explosion", 97),
-                LDAUtils.createResistance("laser", 100),
+                LDAUtils.createResistance("laser", 100)
             },
             damaged_trigger_effect = {
                 entity_name = "spark-explosion",
@@ -93,7 +93,7 @@ data:extend(
                 item = "quantum-teleporter-portal-T1",
                 count = 1
             },
-            module_specification = LDAUtils.createModuleSpec(0,0.5),
+            module_specification = LDAUtils.createModuleSpec(0, 0.5),
             working_sound = {
                 sound = LDAUtils.getAudio(PATH .. "audio/construction", 0.45),
                 idle_sound = LDAUtils.getAudio(gameSounds .. "nuclear-reactor-1")
@@ -105,10 +105,10 @@ data:extend(
                 )
             },
             close_sound = {
-                LDAUtils.getAudio(gameSounds.."machine-close")
+                LDAUtils.getAudio(gameSounds .. "machine-close")
             },
             open_sound = {
-                LDAUtils.getAudio(gameSounds.."machine-open")
+                LDAUtils.getAudio(gameSounds .. "machine-open")
             }
         }
     }
