@@ -6,7 +6,7 @@
 -- barras de energia/estatísticas com labels dinâmicos e seletores de destino.
 -- Implementamos aqui em utils/gui e mantemos como sugestão de expansão para a LDA-LIB.
 
-local LDARuntime = require("__LDA-LIB__/runtime.init")
+local LDARuntime = require("control.utils.lda-runtime")
 local PortalNetwork = require("control.utils.portal-network")
 local MOD_PATH = "__Quantum-Teleporter__/"
 

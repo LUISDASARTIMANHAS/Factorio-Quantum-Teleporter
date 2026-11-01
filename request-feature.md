@@ -62,3 +62,14 @@ Copie este modelo para cada nova solicitacao:
 - **Implementacao temporaria:** `control/gui/portal-gui.lua` (`find_element_by_name`)
 - **Compatibilidade:** LDA-LIB >= 0.0.16, Factorio 2.1+
 - **Observacoes:** A API de GUI do Factorio não fornece busca recursiva nativa em elementos filhos; um helper desse tipo em biblioteca compartilhada padroniza o tratamento de eventos e modais em todos os mods.
+
+### Correcao de Colisao no Registro de Comandos do Runtime (runtime.commands / runtime.init)
+
+- **Status:** Pendente de envio
+- **Funcao/API solicitada:** Proteção contra registro duplicado em `commands.register()` e isolamento do ponto de entrada do runtime. Em `runtime/commands.lua`, deve-se checar se o comando já existe (`if commands.commands["lda-list"] then return end`) ou registrar comandos apenas quando executado pelo mod base (`if script and script.mod_name == "LDA-LIB"`). Alternativamente, o `runtime/init.lua` não deve executar `commands.register()` incondicionalmente no top-level quando importado por mods terceiros como biblioteca.
+- **Necessidade no mod:** Quando outro mod faz `require("__LDA-LIB__/runtime.init")`, o Factorio lança o erro fatal: `A script command already exists with the name: lda-list`, pois a LDA-LIB já havia registrado o comando global em seu próprio ciclo de carregamento.
+- **Estagio do Factorio:** runtime
+- **Uso no projeto:** Todo o runtime (`control.lua`, `control/functions.lua`, `control/handle.lua`, `control/portal.lua`, `control/gui/portal-gui.lua`, `control/utils/portal-network.lua`)
+- **Implementacao temporaria:** `control/utils/lda-runtime.lua` (importa diretamente os submódulos `player`, `entity`, `world` e `item` sem disparar `commands.register()`)
+- **Compatibilidade:** LDA-LIB >= 0.0.16, Factorio 2.1+
+- **Observacoes:** A tabela de comandos do Factorio (`commands.add_command`) é compartilhada globalmente entre todos os mods. Métodos de inicialização de comandos de biblioteca devem ser idempotentes ou restritos ao mod que os define.

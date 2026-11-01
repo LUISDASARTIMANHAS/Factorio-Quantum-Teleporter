@@ -5,3 +5,17 @@ Error while running event Quantum-Teleporter::on_gui_click (ID 1)
 __Quantum-Teleporter__/control/handle.lua:102: attempt to index a nil value
 stack traceback:
 	__Quantum-Teleporter__/control/handle.lua:102: in function <__Quantum-Teleporter__/control/handle.lua:76>
+
+error found 
+
+Quantum-Teleporter 0.0.10 errored when running a required file.
+
+A script command already exists with the name: lda-list
+stack traceback:
+	[C]: in function 'add_command'
+	__LDA-LIB__/runtime/commands.lua:5: in function 'register'
+	__LDA-LIB__/runtime/init.lua:30: in main chunk
+	[C]: in function 'require'
+	__LDA-LIB__/runtime.lua:1: in main chunk
+	[C]: in function 'require'
+	__Quantum-Teleporter__/control.lua:7: in main chunk

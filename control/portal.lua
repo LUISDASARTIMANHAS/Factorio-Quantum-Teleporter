@@ -2,7 +2,7 @@
 -- Lógica de eventos e ciclo de vida da Rede Quântica de Portais
 -- Integração com LDA-LIB no runtime e registro de rede no storage.
 
-local LDARuntime = require("__LDA-LIB__/runtime.init")
+local LDARuntime = require("control.utils.lda-runtime")
 local PortalNetwork = require("control.utils.portal-network")
 local PortalGui = require("control.gui.portal-gui")
 

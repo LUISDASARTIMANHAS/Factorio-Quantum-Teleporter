@@ -4,7 +4,7 @@
 -- Integração canônica com a LDA-LIB (Factorio 2.1+)
 -- ============================================================
 
-local LDARuntime = require("__LDA-LIB__/runtime.init")
+local LDARuntime = require("control.utils.lda-runtime")
 local guimaker = require("control.gui.gui-maker")
 
 -- Módulos de controle especializados

@@ -7,7 +7,7 @@
 -- de entidades vinculadas no storage (ex: teleporters, radares, balizadores).
 -- Enquanto a funcionalidade não entra oficialmente na LDA-LIB, mantemos este módulo em utils.
 
-local LDARuntime = require("__LDA-LIB__/runtime.init")
+local LDARuntime = require("control.utils.lda-runtime")
 local PortalNetwork = {}
 
 local TELEPORT_ENERGY_COST = 20e6 -- 20 MJ por teletransporte via portal

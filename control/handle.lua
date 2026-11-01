@@ -2,7 +2,7 @@
 -- Gerenciador de eventos para o Equipamento Pessoal de Teleporte Quântico
 -- Integração obrigatória com a biblioteca LDA-LIB no runtime.
 
-local LDARuntime = require("__LDA-LIB__/runtime.init")
+local LDARuntime = require("control.utils.lda-runtime")
 local functions = require("control.functions")
 local guimaker = require("control.gui.gui-maker")
 
