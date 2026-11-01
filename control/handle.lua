@@ -1,6 +1,6 @@
 -- control/handle.lua
 -- Gerenciador de eventos para o Equipamento Pessoal de Teleporte Quântico
--- Integração obrigatória com a biblioteca LDA-LIB no runtime.
+-- Integração com a biblioteca LDA-LIB no runtime.
 
 local LDARuntime = require("control.utils.lda-runtime")
 local functions = require("control.functions")
@@ -8,6 +8,35 @@ local guimaker = require("control.gui.gui-maker")
 
 local EQUIPMENT_NAME = "quantum-teleporter-equipment"
 local TELEPORT_ENERGY_REQUIRED = 50e6 -- 50 MJ por salto com equipamento
+
+--- Calcula o total de energia acumulada em todos os equipamentos da grade (baterias e buffers)
+local function get_grid_energy(grid)
+    if not grid or not grid.valid then return 0 end
+    local total = 0
+    for _, eq in ipairs(grid.equipment) do
+        if eq.valid and eq.energy and eq.energy > 0 then
+            total = total + eq.energy
+        end
+    end
+    return total
+end
+
+--- Drena a quantidade solicitada de Joules dos equipamentos na grade
+local function drain_grid_energy(grid, amount_needed)
+    if not grid or not grid.valid or amount_needed <= 0 then return false end
+    local remaining = amount_needed
+    for _, eq in ipairs(grid.equipment) do
+        if eq.valid and eq.energy and eq.energy > 0 then
+            local drain = math.min(eq.energy, remaining)
+            eq.energy = eq.energy - drain
+            remaining = remaining - drain
+            if remaining <= 0 then
+                break
+            end
+        end
+    end
+    return remaining <= 0
+end
 
 local function crafted_item(event)
     local player = LDARuntime.player.get(event.player_index)
@@ -92,9 +121,9 @@ local function teleport_cords(event)
                 local coord_x = tonumber(teleport_window.coord_x.text) or 0
                 local coord_y = tonumber(teleport_window.coord_y.text) or 0
 
-                local energy_available = grid.available_in_batteries
+                local energy_available = get_grid_energy(grid)
                 if energy_available >= TELEPORT_ENERGY_REQUIRED then
-                    grid.drain_energy(TELEPORT_ENERGY_REQUIRED)
+                    drain_grid_energy(grid, TELEPORT_ENERGY_REQUIRED)
                     functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
                     LDARuntime.player.notify(player, string.format("Salto para %s [%.0f, %.0f] executado!", surface_name, coord_x, coord_y))
                 else
@@ -130,5 +159,7 @@ return {
     teleport_planet = teleport_planet,
     teleport_cords = teleport_cords,
     toggle_teleport_equipment = toggle_teleport_equipment,
-    check_teleport_equipment_on_respawn = check_teleport_equipment_on_respawn
+    check_teleport_equipment_on_respawn = check_teleport_equipment_on_respawn,
+    get_grid_energy = get_grid_energy,
+    drain_grid_energy = drain_grid_energy
 }

@@ -88,8 +88,7 @@ function PortalGui.open(player, portal_entity)
 
     local title_label = title_flow.add({
         type = "label",
-        caption = "Terminal de Controle do Portal",
-        style = "heading_2_label"
+        caption = "Terminal de Controle do Portal"
     })
     title_label.style.font = "default-bold"
 
@@ -112,15 +111,16 @@ function PortalGui.open(player, portal_entity)
     local origin_frame = root_flow.add({
         type = "frame",
         direction = "vertical",
-        style = "inside_shallow_frame_with_padding"
+        style = "inside_shallow_frame"
     })
     origin_frame.style.width = 440
+    origin_frame.style.padding = 10
 
     local origin_header = origin_frame.add({
         type = "label",
-        caption = "Portal Local (Origem):",
-        style = "caption_heading_label"
+        caption = "Portal Local (Origem):"
     })
+    origin_header.style.font = "default-bold"
 
     -- Nome customizável
     local name_flow = origin_frame.add({type = "flow", direction = "horizontal"})
@@ -139,8 +139,9 @@ function PortalGui.open(player, portal_entity)
         type = "button",
         name = "quantum_portal_save_name_btn",
         caption = "Salvar Nome",
-        style = "mini_button"
+        style = "button"
     })
+    save_btn.style.height = 28
     save_btn.tags = {unit_number = unit_number}
 
     -- Informações de localização
@@ -158,9 +159,11 @@ function PortalGui.open(player, portal_entity)
     local energy_text = string.format("Carga de Energia: %.1f MJ / %.1f MJ (%d%%)", current_energy / 1e6, max_energy / 1e6, math.floor(energy_percent * 100))
     local energy_label = energy_box.add({
         type = "label",
-        caption = energy_text,
-        style = (current_energy >= energy_cost) and "label" or "warning_label"
+        caption = energy_text
     })
+    if current_energy < energy_cost then
+        energy_label.style.font_color = {r = 1.0, g = 0.5, b = 0.2}
+    end
 
     local progress_bar = energy_box.add({
         type = "progressbar",
@@ -172,9 +175,9 @@ function PortalGui.open(player, portal_entity)
 
     local cost_label = energy_box.add({
         type = "label",
-        caption = string.format("Consumo por teletransporte: %.0f MJ", energy_cost / 1e6),
-        style = "description_label"
+        caption = string.format("Consumo por teletransporte: %.0f MJ", energy_cost / 1e6)
     })
+    cost_label.style.font_color = {r = 0.7, g = 0.7, b = 0.7}
 
     -- =========================================================================
     -- SEÇÃO 2: Destino (Rede de Portais)
@@ -182,22 +185,23 @@ function PortalGui.open(player, portal_entity)
     local dest_frame = root_flow.add({
         type = "frame",
         direction = "vertical",
-        style = "inside_shallow_frame_with_padding"
+        style = "inside_shallow_frame"
     })
     dest_frame.style.width = 440
+    dest_frame.style.padding = 10
 
-    dest_frame.add({
+    local dest_header = dest_frame.add({
         type = "label",
-        caption = "Destino na Rede Quântica:",
-        style = "caption_heading_label"
+        caption = "Destino na Rede Quântica:"
     })
+    dest_header.style.font = "default-bold"
 
     if #destinations == 0 then
         local empty_warning = dest_frame.add({
             type = "label",
-            caption = "Nenhum outro portal conectado à rede.\nConstrua outro Portal Quântico para criar uma conexão de teletransporte!",
-            style = "warning_label"
+            caption = "Nenhum outro portal conectado à rede.\nConstrua outro Portal Quântico para criar uma conexão de teletransporte!"
         })
+        empty_warning.style.font_color = {r = 1.0, g = 0.7, b = 0.2}
         empty_warning.style.top_margin = 8
         empty_warning.style.bottom_margin = 8
     else
@@ -287,18 +291,18 @@ function PortalGui.renderDestDetails(container, origin_entity, dest_entry)
         type = "label",
         caption = string.format("Destino: [font=default-bold]%s[/font]", dest_entry.name)
     })
-    container.add({
+    local sub_info = container.add({
         type = "label",
-        caption = string.format("%s  %s", distance_text, dest_gps),
-        style = "description_label"
+        caption = string.format("%s  %s", distance_text, dest_gps)
     })
+    sub_info.style.font_color = {r = 0.7, g = 0.7, b = 0.7}
 
     if not is_dest_valid then
-        container.add({
+        local warn = container.add({
             type = "label",
-            caption = "[AVISO] O portal de destino parece estar inativo ou obstruído!",
-            style = "warning_label"
+            caption = "[AVISO] O portal de destino parece estar inativo ou obstruído!"
         })
+        warn.style.font_color = {r = 1.0, g = 0.4, b = 0.2}
     end
 end
 

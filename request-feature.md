@@ -73,3 +73,14 @@ Copie este modelo para cada nova solicitacao:
 - **Implementacao temporaria:** `control/utils/lda-runtime.lua` (importa diretamente os submódulos `player`, `entity`, `world` e `item` sem disparar `commands.register()`)
 - **Compatibilidade:** LDA-LIB >= 0.0.16, Factorio 2.1+
 - **Observacoes:** A tabela de comandos do Factorio (`commands.add_command`) é compartilhada globalmente entre todos os mods. Métodos de inicialização de comandos de biblioteca devem ser idempotentes ou restritos ao mod que os define.
+
+### Helpers de Grade de Equipamento e Energia (runtime.modules.equipment_grid)
+
+- **Status:** Pendente de envio
+- **Funcao/API solicitada:** `LDARuntime.equipment_grid` (ou dentro de `runtime.modules.item`) com funções como `getEnergy(grid)` e `drainEnergy(grid, amount_in_joules)`. No Factorio, `LuaEquipmentGrid` não possui método nativo `drain_energy` ou somatório direto de buffer total de baterias/geradores com escrita; a energia reside em cada `LuaEquipment.energy` individual.
+- **Necessidade no mod:** O teleporte pelo equipamento pessoal na armadura precisa ler a carga total disponível na grade e drenar uma cota de Joules de forma distribuída entre as baterias e equipamentos da armadura.
+- **Estagio do Factorio:** runtime
+- **Uso no projeto:** `control/handle.lua` (`get_grid_energy`, `drain_grid_energy`)
+- **Implementacao temporaria:** `control/handle.lua` (`get_grid_energy`, `drain_grid_energy`)
+- **Compatibilidade:** LDA-LIB >= 0.0.16, Factorio 2.1+
+- **Observacoes:** Deve iterar sobre `grid.equipment` e deduzir `eq.energy` até completar a quantia requisitada, retornando booleano de sucesso.

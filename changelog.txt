@@ -15,6 +15,8 @@ Date: 01/11/2026
     - Documentadas e isoladas em utils locais as Feature Requests para a biblioteca LDA-LIB.
   Bugs Fixed:
     - Corrigido erro fatal no carregamento: "A script command already exists with the name: lda-list" ao importar o runtime da LDA-LIB. Criado o carregador `control/utils/lda-runtime.lua` para carregar diretamente os submódulos da biblioteca sem reexecutar o registro de comandos globais.
+    - Corrigido crash ao abrir o portal: "Unknown style caption_heading_label". Substituídos estilos não-padronizados por estilos nativos seguros do Factorio em `control/gui/portal-gui.lua`.
+    - Corrigido crash ao teleportar pelo equipamento: "LuaEquipmentGrid doesn't contain key drain_energy". Implementadas funções locais `get_grid_energy` e `drain_grid_energy` que iteram sobre `grid.equipment` e deduzem a energia das baterias/equipamentos da armadura.
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.9
 Date: 01/11/2026
