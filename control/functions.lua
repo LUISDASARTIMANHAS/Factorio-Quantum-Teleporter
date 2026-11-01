@@ -1,3 +1,5 @@
+local MOD_PATH = "__Quantum-Teleporter__/"
+
 local function play_teleported_effects(player, position)
     -- Efeito visual no destino
     player.surface.create_entity(
@@ -7,23 +9,13 @@ local function play_teleported_effects(player, position)
         }
     )
 
-    -- Reproduz som ao completar o teleporte
-    player.surface.create_entity(
-        {
-            name = "teleported-sound",
-            position = position
-        }
-    )
+    -- Reproduz som ao completar o teleporte (Factorio 2.1: play_sound com path de arquivo)
+    player.play_sound({path = MOD_PATH .. "audio/teleported.ogg", position = position})
 end
 
 local function play_teleport_effects(player, position)
-    -- Reproduz som de teleporte antes de teleportar
-    player.surface.create_entity(
-        {
-            name = "teleport-sound",
-            position = position
-        }
-    )
+    -- Reproduz som de teleporte antes de teleportar (Factorio 2.1: play_sound com path de arquivo)
+    player.play_sound({path = MOD_PATH .. "audio/teleport.ogg", position = position})
 end
 
 local function teleport_to_planet(player, surface_name)

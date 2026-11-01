@@ -1,10 +1,10 @@
 local functions = require("control.functions")
-local guimaker = require("gui.gui-maker")
+local guimaker = require("control.gui.gui-maker")
 
 local function crafted_item(event)
-    local player = game.players[event.player_index]
+    local player = game.get_player(event.player_index)
     if not player then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
+        log("ERROR: player not found in crafted_item")
         return
     end
 
@@ -15,16 +15,15 @@ local function crafted_item(event)
 end
 
 local function player_died_teleport(event)
-    local player = game.players[event.player_index]
-    if not player then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
-        return
-    end
+    local player = game.get_player(event.player_index)
+    if not player then return end
     guimaker.close_teleport_window(player)
 end
 
 local function toggle_teleport_equipment(event)
-    local player = game.players[event.player_index]
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
     local armor = player.get_inventory(defines.inventory.character_armor)[1]
 
     if armor and armor.valid_for_read and armor.grid then
@@ -46,7 +45,8 @@ local function toggle_teleport_equipment(event)
 end
 
 local function check_teleport_equipment_on_respawn(event)
-    local player = game.players[event.player_index]
+    local player = game.get_player(event.player_index)
+    if not player then return end
 
     -- Verifica se o jogador tem uma armadura equipada
     local armor = player.get_inventory(defines.inventory.character_armor)[1]
@@ -74,7 +74,9 @@ end
 
 -- teleport 2.0
 local function teleport_cords(event)
-    local player = game.players[event.player_index]
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
     local element = event.element
 
     -- Verifica se o elemento do evento é válido
@@ -109,7 +111,7 @@ local function teleport_cords(event)
                 local coord_x = tonumber(teleport_window.coord_x.text) or 0
                 local coord_y = tonumber(teleport_window.coord_y.text) or 0
 
-                -- Realiza o teletransporte
+                -- Realiza o teletransporte com verificação de energia
                 local energy_available = grid.available_in_batteries
                 local energy_required = 50e6 -- Energia necessária para teletransporte
                 if energy_available >= energy_required then
@@ -127,9 +129,11 @@ local function teleport_cords(event)
     end
 end
 
--- teleport 1.0
+-- teleport 1.0 (legado, mantido para compatibilidade)
 local function teleport_planet(event)
-    local player = game.players[event.player_index]
+    local player = game.get_player(event.player_index)
+    if not player then return end
+
     local element = event.element
     if not element or not element.valid then
         return
@@ -137,7 +141,7 @@ local function teleport_planet(event)
 
     if element.name == "confirm_button" then
         local surface_name = player.gui.screen.teleport_window.surface_name.text
-        functions.Teleport_to_planet(player, surface_name)
+        functions.teleport_to_planet(player, surface_name)
     end
 end
 

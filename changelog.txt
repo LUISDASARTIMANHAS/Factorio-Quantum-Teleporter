@@ -1,4 +1,22 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.9
+Date: 01/11/2026
+  Changes:
+    - Atualizada dependência LDA-LIB para >= 0.0.16 (arquitetura canônica).
+    - Corrigido caminho de require em handle.lua (gui.gui-maker -> control.gui.gui-maker).
+    - Corrigido bug: functions.Teleport_to_planet -> functions.teleport_to_planet (casing).
+    - Portal principal alterado de type "accumulator" para "assembling-machine" (protótipo correto).
+    - Removidos campos inválidos no portal principal (inventory_size, radar_range não pertencem a assembling-machine).
+    - Sons de efeito (teleport-sound, teleported-sound) migrados de create_entity para player.play_sound (Factorio 2.1).
+    - soundMaker.lua: removidos protótipos type="sound" inexistentes em Factorio 2.1.
+    - control.lua: removida duplicação de eventos on_gui_click e on_player_created/joined que conflitavam com teleport-2.lua.
+    - Substituído game.players[index] por game.get_player(index) em todo o control.
+  Bugs Fixed:
+    - Crash ao carregar: "quantum-teleporter-portal" usava type accumulator com campos de assembling-machine.
+    - Crash ao teleportar: sounds eram criados como entidades (inválido no Factorio 2.1).
+    - Crash em handle.lua: require("gui.gui-maker") path incorreto.
+    - Função Teleport_to_planet inexistente (typo de casing).
+---------------------------------------------------------------------------------------------------
 Version: 0.0.8
 Date: 21/06/2026
   Changes:
