@@ -128,23 +128,17 @@ end
 
 --- Encontra uma posição segura e livre de colisão ao redor do portal para o jogador
 --- @param portal_entity LuaEntity
---- @return table
+--- @return table|nil
 function PortalNetwork.getSpawnPosition(portal_entity)
     if not LDARuntime.entity.isValid(portal_entity) then
-        return {x = 0, y = 0}
+        return nil
     end
 
     local surface = LDARuntime.entity.getSurface(portal_entity)
     local pos = LDARuntime.entity.getPosition(portal_entity)
 
     -- Tenta encontrar uma posição desobstruída nas imediações do portal
-    local free_pos = LDARuntime.world.findFreePosition(surface, "character", pos, 12, 1)
-    if free_pos then
-        return free_pos
-    end
-
-    -- Fallback: 6 tiles ao sul da base do portal
-    return {x = pos.x, y = pos.y + 6}
+    return LDARuntime.world.findFreePosition(surface, "character", pos, 12, 1)
 end
 
 --- Custo de energia fixo em Joules para uso do portal
@@ -153,4 +147,3 @@ function PortalNetwork.getEnergyCost()
 end
 
 return PortalNetwork
-

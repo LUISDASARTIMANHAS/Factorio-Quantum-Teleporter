@@ -384,27 +384,30 @@ function PortalGui.on_gui_click(event)
         local dest_entity = dest_entry.entity
         local dest_surface = LDARuntime.entity.getSurface(dest_entity)
         local dest_pos = PortalNetwork.getSpawnPosition(dest_entity)
+        if not dest_surface or not dest_pos then
+            LDARuntime.player.notify(player, "Não foi encontrada uma posição livre perto do portal de destino.")
+            return
+        end
 
-        -- Consome a energia do portal de origem via LDA-LIB
-        LDARuntime.entity.setEnergy(origin_entity, current_energy - energy_cost)
-
-        -- Efeitos de partida
-        local origin_surface = LDARuntime.entity.getSurface(origin_entity)
         local origin_pos = LDARuntime.player.getPosition(player)
-        player.play_sound({path = "quantum-teleport-sound", position = origin_pos})
-        LDARuntime.world.createExplosion(origin_surface, origin_pos, "big-explosion")
 
         -- Salto Quântico usando a LDA-LIB
         local success = LDARuntime.player.teleport(player, dest_pos, dest_surface)
 
         if success then
+            LDARuntime.entity.setEnergy(origin_entity, current_energy - energy_cost)
+            LDARuntime.world.createExplosion(
+                LDARuntime.entity.getSurface(origin_entity),
+                origin_pos,
+                "big-explosion"
+            )
             -- Efeitos de chegada no destino
             player.play_sound({path = "quantum-teleported-sound", position = dest_pos})
             LDARuntime.world.createExplosion(dest_surface, dest_pos, "big-explosion")
             LDARuntime.player.notify(player, string.format("Teleportado com sucesso para: %s!", dest_entry.name or "Portal"))
             LDARuntime.player.flyingText(player, "Salto Quântico Concluído!", {color = {r=0.2, g=0.8, b=1.0}})
         else
-            LDARuntime.player.notify(player, "Falha ao teleportar para o destino.")
+            LDARuntime.player.notify(player, "O Factorio recusou a posição de destino; nenhuma energia foi consumida.")
         end
 
         -- Fecha a interface após o teleporte

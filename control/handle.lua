@@ -123,9 +123,9 @@ local function teleport_cords(event)
 
                 local energy_available = get_grid_energy(grid)
                 if energy_available >= TELEPORT_ENERGY_REQUIRED then
-                    drain_grid_energy(grid, TELEPORT_ENERGY_REQUIRED)
-                    functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
-                    LDARuntime.player.notify(player, string.format("Salto para %s [%.0f, %.0f] executado!", surface_name, coord_x, coord_y))
+                    if functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y) then
+                        drain_grid_energy(grid, TELEPORT_ENERGY_REQUIRED)
+                    end
                 else
                     LDARuntime.player.flyingText(player, "Bateria insuficiente!", {color = {r=1, g=0.2, b=0.2}})
                     LDARuntime.player.notify(player, string.format("Energia insuficiente na armadura. Necessário: %.0f MJ (Disponível: %.1f MJ)", TELEPORT_ENERGY_REQUIRED / 1e6, energy_available / 1e6))
