@@ -1,1 +1,7 @@
-no bugs
+O mod Quantum Teleporter (0.0.9) causou um erro não recuperável.
+Por favor, reporte este erro ao autor do mod.
+
+Error while running event Quantum-Teleporter::on_gui_click (ID 1)
+__Quantum-Teleporter__/control/handle.lua:102: attempt to index a nil value
+stack traceback:
+	__Quantum-Teleporter__/control/handle.lua:102: in function <__Quantum-Teleporter__/control/handle.lua:76>

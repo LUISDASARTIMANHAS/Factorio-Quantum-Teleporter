@@ -3,5 +3,6 @@
 .git
 .env
 *.db
+*.html
 /docs
 **/docs

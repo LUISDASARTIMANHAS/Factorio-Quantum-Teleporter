@@ -1,59 +1,56 @@
+-- control/functions.lua
+-- Funções de teletransporte e efeitos integradas à LDA-LIB
+
+local LDARuntime = require("__LDA-LIB__/runtime.init")
 local MOD_PATH = "__Quantum-Teleporter__/"
 
 local function play_teleported_effects(player, position)
-    -- Efeito visual no destino
-    player.surface.create_entity(
-        {
-            name = "big-explosion",
-            position = position
-        }
-    )
-
-    -- Reproduz som ao completar o teleporte (Factorio 2.1: play_sound com path de arquivo)
+    local surface = LDARuntime.player.getSurface(player)
+    if surface then
+        LDARuntime.world.createExplosion(surface, position, "big-explosion")
+    end
     player.play_sound({path = MOD_PATH .. "audio/teleported.ogg", position = position})
 end
 
 local function play_teleport_effects(player, position)
-    -- Reproduz som de teleporte antes de teleportar (Factorio 2.1: play_sound com path de arquivo)
     player.play_sound({path = MOD_PATH .. "audio/teleport.ogg", position = position})
 end
 
 local function teleport_to_planet(player, surface_name)
-    local destination_surface = game.surfaces[surface_name]
+    local destination_surface = LDARuntime.world.getSurface(surface_name)
     if destination_surface then
-        local destination_position = {x = 0, y = 0} -- Posição padrão
+        local destination_position = {x = 0, y = 0}
 
-        play_teleport_effects(player, player.position)
-        player.teleport(destination_position, destination_surface)
+        local current_pos = LDARuntime.player.getPosition(player)
+        play_teleport_effects(player, current_pos)
+
+        LDARuntime.player.teleport(player, destination_position, destination_surface)
         play_teleported_effects(player, destination_position)
-        game.print(player.name .. " foi teletransportado para " .. surface_name)
+        LDARuntime.player.notify(player, string.format("%s foi teletransportado para %s!", player.name, surface_name))
     else
-        game.print("Superfície " .. surface_name .. " não encontrada!")
+        LDARuntime.player.notify(player, string.format("Superfície '%s' não encontrada!", tostring(surface_name)))
     end
 end
 
 local function teleport_to_planet_with_cords(player, surface_name, x, y)
-    if surface_name and game.surfaces[surface_name] then
-        local destination_surface = game.surfaces[surface_name]
+    local destination_surface = LDARuntime.world.getSurface(surface_name)
+    if destination_surface then
+        local destination_position = {x = x, y = y}
 
-        if destination_surface then
-            local destination_position = {x = x, y = y}
+        local current_pos = LDARuntime.player.getPosition(player)
+        play_teleport_effects(player, current_pos)
 
-            play_teleport_effects(player, player.position)
-            player.teleport(destination_position, destination_surface)
-            play_teleported_effects(player, destination_position)
-            game.print(
-                player.name .. " foi teletransportado para " .. surface_name .. " nas coordenadas " .. x .. ", " .. y
-            )
-        else
-            game.print("Superfície " .. surface_name .. " não encontrada!")
-        end
+        LDARuntime.player.teleport(player, destination_position, destination_surface)
+        play_teleported_effects(player, destination_position)
+        LDARuntime.player.notify(player, string.format("%s foi teletransportado para %s nas coordenadas %.0f, %.0f!", player.name, surface_name, x, y))
     else
-        player.print("Erro: Superfície inválida.")
+        LDARuntime.player.notify(player, "Erro: Superfície de destino inválida.")
     end
 end
 
 return {
     teleport_to_planet_with_cords = teleport_to_planet_with_cords,
-    teleport_to_planet = teleport_to_planet
+    teleport_to_planet = teleport_to_planet,
+    play_teleport_effects = play_teleport_effects,
+    play_teleported_effects = play_teleported_effects
 }

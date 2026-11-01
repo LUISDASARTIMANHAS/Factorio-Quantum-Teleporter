@@ -1,42 +1,47 @@
+-- control/handle.lua
+-- Gerenciador de eventos para o Equipamento Pessoal de Teleporte Quântico
+-- Integração obrigatória com a biblioteca LDA-LIB no runtime.
+
+local LDARuntime = require("__LDA-LIB__/runtime.init")
 local functions = require("control.functions")
 local guimaker = require("control.gui.gui-maker")
 
+local EQUIPMENT_NAME = "quantum-teleporter-equipment"
+local TELEPORT_ENERGY_REQUIRED = 50e6 -- 50 MJ por salto com equipamento
+
 local function crafted_item(event)
-    local player = game.get_player(event.player_index)
-    if not player then
-        log("ERROR: player not found in crafted_item")
-        return
-    end
+    local player = LDARuntime.player.get(event.player_index)
+    if not player then return end
 
     local item_stack = event.item_stack
-    if item_stack and item_stack.valid and item_stack.name == "quantum-teleporter-equipment" then
+    if item_stack and item_stack.valid and item_stack.name == EQUIPMENT_NAME then
         guimaker.create_teleport_window(player)
     end
 end
 
 local function player_died_teleport(event)
-    local player = game.get_player(event.player_index)
+    local player = LDARuntime.player.get(event.player_index)
     if not player then return end
     guimaker.close_teleport_window(player)
 end
 
 local function toggle_teleport_equipment(event)
-    local player = game.get_player(event.player_index)
+    local player = LDARuntime.player.get(event.player_index)
     if not player then return end
 
     local armor = player.get_inventory(defines.inventory.character_armor)[1]
 
     if armor and armor.valid_for_read and armor.grid then
         local grid = armor.grid
-        local has_teleporter = grid.get_contents()["quantum-teleporter-equipment"]
+        local has_teleporter = (grid.count(EQUIPMENT_NAME) > 0)
 
         if has_teleporter then
-            log("Quantum teleporter equipment detected")
+            log("[Quantum-Teleporter] Equipamento pessoal detectado na armadura.")
             if not player.gui.screen.teleport_window then
                 guimaker.create_teleport_window(player)
             end
         else
-            log("Quantum teleporter equipment removed")
+            log("[Quantum-Teleporter] Equipamento pessoal removido.")
             guimaker.close_teleport_window(player)
         end
     else
@@ -45,99 +50,73 @@ local function toggle_teleport_equipment(event)
 end
 
 local function check_teleport_equipment_on_respawn(event)
-    local player = game.get_player(event.player_index)
+    local player = LDARuntime.player.get(event.player_index)
     if not player then return end
 
-    -- Verifica se o jogador tem uma armadura equipada
     local armor = player.get_inventory(defines.inventory.character_armor)[1]
-    if not armor or not armor.valid_for_read then
-        -- Sem armadura ou inválida
+    if not armor or not armor.valid_for_read or not armor.grid then
         guimaker.close_teleport_window(player)
         return
     end
 
-    -- Verifica se a armadura tem o equipamento de teletransporte
     local grid = armor.grid
-    if not grid then
-        guimaker.close_teleport_window(player)
-        return
-    end
-
-    local has_teleporter = grid.get_contents()["quantum-teleporter-equipment"]
-    if has_teleporter then
-        -- Reativa a janela de teletransporte
+    if grid.count(EQUIPMENT_NAME) > 0 then
         if not player.gui.screen.teleport_window then
             guimaker.create_teleport_window(player)
         end
     end
 end
 
--- teleport 2.0
+-- Teletransporte livre por coordenadas do Equipamento Pessoal
 local function teleport_cords(event)
-    local player = game.get_player(event.player_index)
+    local player = LDARuntime.player.get(event.player_index)
     if not player then return end
 
     local element = event.element
-
-    -- Verifica se o elemento do evento é válido
-    if not element or not element.valid then
-        player.print("ERROR FATAL! REPORT TO DEVELOPER")
-        return
-    end
+    if not element or not element.valid then return end
 
     if element.name == "confirm_button" then
         local teleport_window = player.gui.screen.teleport_window
-        if not teleport_window then
-            player.print("Erro: Janela de teletransporte não encontrada.")
-            return
-        end
+        if not teleport_window then return end
 
-        -- Captura a superfície selecionada no dropdown
         local surface_dropdown = teleport_window.surface_dropdown
-        if not surface_dropdown then
-            player.print("Erro: Dropdown de superfícies não encontrado.")
-            return
-        end
+        if not surface_dropdown then return end
 
         local armor = player.get_inventory(defines.inventory.character_armor)[1]
         if armor and armor.valid_for_read and armor.grid then
             local grid = armor.grid
-            local teleporter = grid.get_contents()["quantum-teleporter-equipment"]
-            if teleporter then
+            if grid.count(EQUIPMENT_NAME) > 0 then
                 local selected_index = surface_dropdown.selected_index
                 local surface_name = surface_dropdown.items[selected_index]
 
-                -- Captura as coordenadas
                 local coord_x = tonumber(teleport_window.coord_x.text) or 0
                 local coord_y = tonumber(teleport_window.coord_y.text) or 0
 
-                -- Realiza o teletransporte com verificação de energia
                 local energy_available = grid.available_in_batteries
-                local energy_required = 50e6 -- Energia necessária para teletransporte
-                if energy_available >= energy_required then
-                    grid.drain_energy(energy_required) -- Consome energia
+                if energy_available >= TELEPORT_ENERGY_REQUIRED then
+                    grid.drain_energy(TELEPORT_ENERGY_REQUIRED)
                     functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
+                    LDARuntime.player.notify(player, string.format("Salto para %s [%.0f, %.0f] executado!", surface_name, coord_x, coord_y))
                 else
-                    player.print("Energia insuficiente.")
+                    LDARuntime.player.flyingText(player, "Bateria insuficiente!", {color = {r=1, g=0.2, b=0.2}})
+                    LDARuntime.player.notify(player, string.format("Energia insuficiente na armadura. Necessário: %.0f MJ (Disponível: %.1f MJ)", TELEPORT_ENERGY_REQUIRED / 1e6, energy_available / 1e6))
                 end
             else
-                player.print("Equipamento de teletransporte não encontrado.")
+                LDARuntime.player.notify(player, "Equipamento de teletransporte não encontrado na armadura.")
             end
         else
-            player.print("Nenhuma armadura equipada.")
+            LDARuntime.player.notify(player, "Nenhuma armadura com grade de equipamento equipada.")
         end
     end
 end
 
--- teleport 1.0 (legado, mantido para compatibilidade)
+-- Teleporte planetário (legado)
 local function teleport_planet(event)
-    local player = game.get_player(event.player_index)
+    local player = LDARuntime.player.get(event.player_index)
     if not player then return end
 
     local element = event.element
-    if not element or not element.valid then
-        return
-    end
+    if not element or not element.valid then return end
 
     if element.name == "confirm_button" then
         local surface_name = player.gui.screen.teleport_window.surface_name.text

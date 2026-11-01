@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.10
+Date: 01/11/2026
+  Changes:
+    - O Portal Quântico agora possui interface visual própria (GUI dedicada) em vez de ser uma máquina de montagem.
+    - Transformado o protótipo do portal em acumulador de energia especializado (200MJ de buffer, 50MW de recarga).
+    - Implementada a Rede Quântica de Portais (Portal Network):
+      - Registro automático de portais construídos no mapa.
+      - Seleção de portais de destino conectados na mesma força.
+      - Suporte a renomear portais na interface e persistência no storage.
+      - Exibição de carga de energia em tempo real, custo de salto (20MJ), distância e teletransporte interplanetário.
+      - Efeitos visuais e sonoros quânticos na partida e chegada.
+    - Integração obrigatória com LDARuntime da LDA-LIB (player, entity, world).
+    - Despacho unificado de eventos de GUI para evitar sobrescrita entre módulos.
+    - Documentadas e isoladas em utils locais as Feature Requests para a biblioteca LDA-LIB.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.9
 Date: 01/11/2026
   Changes:
