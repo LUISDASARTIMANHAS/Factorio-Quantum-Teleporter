@@ -9,11 +9,11 @@ local function play_teleported_effects(player, position)
     if surface then
         LDARuntime.world.createExplosion(surface, position, "big-explosion")
     end
-    player.play_sound({path = MOD_PATH .. "audio/teleported.ogg", position = position})
+    player.play_sound({path = "quantum-teleported-sound", position = position})
 end
 
 local function play_teleport_effects(player, position)
-    player.play_sound({path = MOD_PATH .. "audio/teleport.ogg", position = position})
+    player.play_sound({path = "quantum-teleport-sound", position = position})
 end
 
 local function teleport_to_planet(player, surface_name)

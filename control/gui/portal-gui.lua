@@ -391,7 +391,7 @@ function PortalGui.on_gui_click(event)
         -- Efeitos de partida
         local origin_surface = LDARuntime.entity.getSurface(origin_entity)
         local origin_pos = LDARuntime.player.getPosition(player)
-        player.play_sound({path = MOD_PATH .. "audio/teleport.ogg", position = origin_pos})
+        player.play_sound({path = "quantum-teleport-sound", position = origin_pos})
         LDARuntime.world.createExplosion(origin_surface, origin_pos, "big-explosion")
 
         -- Salto Quântico usando a LDA-LIB
@@ -399,7 +399,7 @@ function PortalGui.on_gui_click(event)
 
         if success then
             -- Efeitos de chegada no destino
-            player.play_sound({path = MOD_PATH .. "audio/teleported.ogg", position = dest_pos})
+            player.play_sound({path = "quantum-teleported-sound", position = dest_pos})
             LDARuntime.world.createExplosion(dest_surface, dest_pos, "big-explosion")
             LDARuntime.player.notify(player, string.format("Teleportado com sucesso para: %s!", dest_entry.name or "Portal"))
             LDARuntime.player.flyingText(player, "Salto Quântico Concluído!", {color = {r=0.2, g=0.8, b=1.0}})

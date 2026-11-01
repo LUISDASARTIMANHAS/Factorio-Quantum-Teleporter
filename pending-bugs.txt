@@ -1,20 +1,23 @@
 O mod Quantum Teleporter (0.0.10) causou um erro não recuperável.
 Por favor, reporte este erro ao autor do mod.
 
-Error while running event Quantum-Teleporter::on_gui_opened (ID 104)
-Unknown style caption_heading_label
+Error while running event Quantum-Teleporter::on_gui_click (ID 1)
+Unknown type "__Quantum-Teleporter__"
 stack traceback:
-	[C]: in function 'add'
-	__Quantum-Teleporter__/control/gui/portal-gui.lua:119: in function 'open'
-	__Quantum-Teleporter__/control/portal.lua:98: in function <__Quantum-Teleporter__/control/portal.lua:92>
+	[C]: in function 'play_sound'
+	__Quantum-Teleporter__/control/gui/portal-gui.lua:394: in function 'on_gui_click'
+	__Quantum-Teleporter__/control/teleport-2.lua:15: in function <__Quantum-Teleporter__/control/teleport-2.lua:13>
+
 
 
 O mod Quantum Teleporter (0.0.10) causou um erro não recuperável.
 Por favor, reporte este erro ao autor do mod.
 
 Error while running event Quantum-Teleporter::on_gui_click (ID 1)
-LuaEquipmentGrid doesn't contain key drain_energy.
+Unknown type "__Quantum-Teleporter__"
 stack traceback:
-	[C]: in function '__index'
-	__Quantum-Teleporter__/control/handle.lua:97: in function 'teleport_cords'
+	[C]: in function 'play_sound'
+	__Quantum-Teleporter__/control/functions.lua:16: in function 'play_teleport_effects'
+	__Quantum-Teleporter__/control/functions.lua:41: in function 'teleport_to_planet_with_cords'
+	__Quantum-Teleporter__/control/handle.lua:127: in function 'teleport_cords'
 	__Quantum-Teleporter__/control/teleport-2.lua:17: in function <__Quantum-Teleporter__/control/teleport-2.lua:13>
