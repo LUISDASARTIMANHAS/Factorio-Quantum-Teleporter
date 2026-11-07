@@ -1,7 +1,7 @@
 -- control/functions.lua
 -- Funções de teletransporte e efeitos integradas à LDA-LIB
 
-local LDARuntime = require("control.utils.lda-runtime")
+local LDARuntime = require("__LDA-LIB__/runtime.init")
 
 local function play_teleported_effects(player, position)
     local surface = LDARuntime.player.getSurface(player)

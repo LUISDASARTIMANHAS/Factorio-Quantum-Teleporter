@@ -1,43 +1,35 @@
 -- control/gui/portal-gui.lua
 -- Interface visual dedicada do Portal Quântico
---
--- [FEATURE REQUEST TO LDA-LIB: runtime.modules.gui]
--- A biblioteca LDA-LIB ainda não oferece helpers de GUI para modais de entidade,
--- barras de energia/estatísticas com labels dinâmicos e seletores de destino.
--- Implementamos aqui em utils/gui e mantemos como sugestão de expansão para a LDA-LIB.
+-- Integração com a biblioteca LDA-LIB no runtime via LDARuntime.network e LDARuntime.gui (>= 0.0.17).
 
-local LDARuntime = require("control.utils.lda-runtime")
-local PortalNetwork = require("control.utils.portal-network")
-local MOD_PATH = "__Quantum-Teleporter__/"
+local LDARuntime = require("__LDA-LIB__/runtime.init")
 
 local PortalGui = {}
 
 local WINDOW_NAME = "quantum_portal_window"
+local NETWORK_NAME = "portals"
+local TELEPORT_ENERGY_COST = 20e6 -- 20 MJ por teletransporte via portal
 
---- Busca recursiva de elemento GUI pelo nome dentro de uma hierarquia
-local function find_element_by_name(element, name)
-    if not element or not element.valid then return nil end
-    if element.name == name then return element end
-    if element.children then
-        for _, child in pairs(element.children) do
-            local found = find_element_by_name(child, name)
-            if found then return found end
+--- Retorna os destinos válidos disponíveis na rede, excluindo o portal de origem
+local function get_available_destinations(force_name, exclude_unit_number)
+    local all = LDARuntime.network.getAll(NETWORK_NAME, force_name)
+    local destinations = {}
+    for _, node in ipairs(all) do
+        if not exclude_unit_number or node.unit_number ~= exclude_unit_number then
+            table.insert(destinations, node)
         end
     end
-    return nil
+    table.sort(destinations, function(a, b)
+        return (a.name or "") < (b.name or "")
+    end)
+    return destinations
 end
 
 --- Fecha a janela do portal se estiver aberta
 --- @param player LuaPlayer
 function PortalGui.close(player)
     if not LDARuntime.player.isValid(player) then return end
-    local screen = player.gui.screen
-    if screen[WINDOW_NAME] then
-        screen[WINDOW_NAME].destroy()
-    end
-    if player.opened and player.opened.valid and player.opened.name == WINDOW_NAME then
-        player.opened = nil
-    end
+    LDARuntime.gui.closeWindow(player, WINDOW_NAME)
 end
 
 --- Abre a interface do portal para o jogador
@@ -52,21 +44,21 @@ function PortalGui.open(player, portal_entity)
     PortalGui.close(player)
 
     local unit_number = portal_entity.unit_number
-    local entry = PortalNetwork.get(unit_number)
+    local entry = LDARuntime.network.get(NETWORK_NAME, unit_number)
     if not entry then
-        entry = PortalNetwork.register(portal_entity)
+        entry = LDARuntime.network.register(NETWORK_NAME, portal_entity)
     end
 
     local current_energy = LDARuntime.entity.getEnergy(portal_entity)
     local max_energy = 200e6 -- 200 MJ
     local energy_percent = math.min(1, current_energy / max_energy)
-    local energy_cost = PortalNetwork.getEnergyCost()
+    local energy_cost = TELEPORT_ENERGY_COST
 
     local surface = LDARuntime.entity.getSurface(portal_entity)
     local position = LDARuntime.entity.getPosition(portal_entity)
     local gps_tag = LDARuntime.world.formatGps(position, surface)
 
-    local destinations = PortalNetwork.getAvailableDestinations(player.force.name, unit_number)
+    local destinations = get_available_destinations(player.force.name, unit_number)
 
     local screen = player.gui.screen
     local window = screen.add({
@@ -156,7 +148,12 @@ function PortalGui.open(player, portal_entity)
     local energy_box = origin_frame.add({type = "flow", direction = "vertical"})
     energy_box.style.top_margin = 6
 
-    local energy_text = string.format("Carga de Energia: %.1f MJ / %.1f MJ (%d%%)", current_energy / 1e6, max_energy / 1e6, math.floor(energy_percent * 100))
+    local energy_text = string.format(
+        "Carga de Energia: %s / %s (%d%%)",
+        LDARuntime.gui.formatEnergy(current_energy),
+        LDARuntime.gui.formatEnergy(max_energy),
+        math.floor(energy_percent * 100)
+    )
     local energy_label = energy_box.add({
         type = "label",
         caption = energy_text
@@ -175,7 +172,7 @@ function PortalGui.open(player, portal_entity)
 
     local cost_label = energy_box.add({
         type = "label",
-        caption = string.format("Consumo por teletransporte: %.0f MJ", energy_cost / 1e6)
+        caption = string.format("Consumo por teletransporte: %s", LDARuntime.gui.formatEnergy(energy_cost))
     })
     cost_label.style.font_color = {r = 0.7, g = 0.7, b = 0.7}
 
@@ -325,11 +322,11 @@ function PortalGui.on_gui_click(event)
     if element.name == "quantum_portal_save_name_btn" then
         local window = player.gui.screen[WINDOW_NAME]
         if window and element.tags and element.tags.unit_number then
-            local textfield = find_element_by_name(window, "quantum_portal_name_input")
+            local textfield = LDARuntime.gui.findElementByName(window, "quantum_portal_name_input")
             if textfield and textfield.valid then
                 local new_name = textfield.text
                 if string.len(new_name) > 0 then
-                    PortalNetwork.setName(element.tags.unit_number, new_name)
+                    LDARuntime.network.setName(NETWORK_NAME, element.tags.unit_number, new_name)
                     LDARuntime.player.flyingText(player, "Nome atualizado!", {color = {r=0.2, g=1, b=0.4}})
                     LDARuntime.player.notify(player, "Nome do portal alterado para: " .. new_name)
                 end
@@ -346,7 +343,7 @@ function PortalGui.on_gui_click(event)
         local origin_id = element.tags and element.tags.origin_unit_number
         if not origin_id then return end
 
-        local origin_entry = PortalNetwork.get(origin_id)
+        local origin_entry = LDARuntime.network.get(NETWORK_NAME, origin_id)
         if not origin_entry or not LDARuntime.entity.isValid(origin_entry.entity) then
             LDARuntime.player.notify(player, "Erro: Portal de origem não encontrado ou inválido.")
             PortalGui.close(player)
@@ -356,22 +353,26 @@ function PortalGui.on_gui_click(event)
         local origin_entity = origin_entry.entity
 
         -- Verifica energia do portal
-        local energy_cost = PortalNetwork.getEnergyCost()
+        local energy_cost = TELEPORT_ENERGY_COST
         local current_energy = LDARuntime.entity.getEnergy(origin_entity)
         if current_energy < energy_cost then
             LDARuntime.player.flyingText(player, "Energia insuficiente no portal!", {color = {r=1, g=0.2, b=0.2}})
-            LDARuntime.player.notify(player, string.format("Energia insuficiente. Necessário: %.0f MJ (Atual: %.1f MJ)", energy_cost / 1e6, current_energy / 1e6))
+            LDARuntime.player.notify(player, string.format(
+                "Energia insuficiente. Necessário: %s (Atual: %s)",
+                LDARuntime.gui.formatEnergy(energy_cost),
+                LDARuntime.gui.formatEnergy(current_energy)
+            ))
             return
         end
 
         -- Descobre destino selecionado no dropdown
-        local dropdown = find_element_by_name(window, "quantum_portal_dest_dropdown")
+        local dropdown = LDARuntime.gui.findElementByName(window, "quantum_portal_dest_dropdown")
         if not dropdown or not dropdown.valid then
             LDARuntime.player.notify(player, "Nenhum destino selecionado.")
             return
         end
 
-        local destinations = PortalNetwork.getAvailableDestinations(player.force.name, origin_id)
+        local destinations = get_available_destinations(player.force.name, origin_id)
         local selected_idx = dropdown.selected_index
         local dest_entry = destinations[selected_idx]
 
@@ -383,7 +384,7 @@ function PortalGui.on_gui_click(event)
 
         local dest_entity = dest_entry.entity
         local dest_surface = LDARuntime.entity.getSurface(dest_entity)
-        local dest_pos = PortalNetwork.getSpawnPosition(dest_entity)
+        local dest_pos = LDARuntime.network.findFreeSpawnPosition(dest_entity, "character", 8)
         if not dest_surface or not dest_pos then
             LDARuntime.player.notify(player, "Não foi encontrada uma posição livre perto do portal de destino.")
             return
@@ -428,17 +429,17 @@ function PortalGui.on_selection_changed(event)
     local window = player.gui.screen[WINDOW_NAME]
     if not window then return end
 
-    local teleport_btn = find_element_by_name(window, "quantum_portal_teleport_btn")
+    local teleport_btn = LDARuntime.gui.findElementByName(window, "quantum_portal_teleport_btn")
     local origin_id = teleport_btn and teleport_btn.tags and teleport_btn.tags.origin_unit_number
     if not origin_id then return end
 
-    local origin_entry = PortalNetwork.get(origin_id)
+    local origin_entry = LDARuntime.network.get(NETWORK_NAME, origin_id)
     if not origin_entry then return end
 
-    local destinations = PortalNetwork.getAvailableDestinations(player.force.name, origin_id)
+    local destinations = get_available_destinations(player.force.name, origin_id)
     local selected_dest = destinations[element.selected_index]
 
-    local detail_box = find_element_by_name(window, "quantum_portal_dest_info_box")
+    local detail_box = LDARuntime.gui.findElementByName(window, "quantum_portal_dest_info_box")
     if detail_box and detail_box.valid then
         PortalGui.renderDestDetails(detail_box, origin_entry.entity, selected_dest)
     end

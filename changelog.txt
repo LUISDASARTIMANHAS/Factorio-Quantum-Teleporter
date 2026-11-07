@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.11
+Date: 07/11/2026
+  Changes:
+    - Atualizada dependência da LDA-LIB para >= 0.0.17 (suporte completo a Factorio 2.1 e Space Age).
+    - Migração completa de todas as Feature Requests para a biblioteca oficial LDA-LIB:
+      - Utilização oficial de `LDAFunctions.createAccumulator` para o protótipo do Portal Quântico em `data/blocos/quantum-teleporter-portal.lua`.
+      - Migração da Rede Quântica de Portais para o módulo oficial `LDARuntime.network` (`register`, `unregister`, `get`, `getAll`, `setName`, `findFreeSpawnPosition`, `cleanup`).
+      - Migração da gestão de energia e drenagem de grade de equipamentos para o módulo oficial `LDARuntime.equipment_grid` (`getEnergy`, `drainEnergy`).
+      - Migração das funções de interface gráfica para `LDARuntime.gui` (`findElementByName`, `formatEnergy`, `closeWindow`).
+      - Remoção dos módulos auxiliares temporários em `control/utils/` (`lda-runtime.lua` e `portal-network.lua`) e em `data/utils.lua` (`functions.createAccumulator`).
+      - O runtime agora consome diretamente `__LDA-LIB__/runtime.init` graças à proteção contra colisão de comando no mod base (`script.mod_name == "LDA-LIB"`).
+---------------------------------------------------------------------------------------------------
 Version: 0.0.10
 Date: 01/11/2026
   Changes:

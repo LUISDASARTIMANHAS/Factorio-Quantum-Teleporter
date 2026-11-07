@@ -6,28 +6,57 @@ local PATH = LDAFunctions.setBasePath("Quantum-Teleporter")
 local defaultFilename = PATH .. "graphics/icons/quantum-teleporter-portal"
 local defaultIconSize = 512
 
-local localUtils = require("data.utils")
-
--- O Portal Quântico Final:
+-- O Portal Quântico:
+-- Construído via LDAFunctions.createAccumulator oficial da LDA-LIB (>= 0.0.17).
 -- Configurado como ACUMULADOR especializado de energia quântica.
 -- Não possui slots de montagem nem receitas de crafting.
 -- Conecta-se à rede elétrica e armazena até 200MJ de energia para saltos quânticos.
 data:extend(
     {
-        localUtils.createAccumulator({
+        LDAFunctions.createAccumulator({
             name = "quantum-teleporter-portal",
             icon = defaultFilename .. ".png",
             icon_size = defaultIconSize,
-            icon_mipmaps = 4,
-            box_size = boxSize,
+            collision_box = LDAUtils.createBoundingBox(boxSize, boxSize),
+            selection_box = LDAUtils.createBoundingBox(boxSize, boxSize),
+            drawing_box = LDAUtils.createBoundingBox(boxSize, boxSize),
             buffer_capacity = "200MJ",
             input_flow_limit = "50MW",
             output_flow_limit = "0kW", -- Não descarrega de volta para a rede comum
             max_health = 1500,
             corpse = "assembling-machine-2-remnants",
             dying_explosion = "assembling-machine-2-explosion",
-            surface_conditions = {
-                {property = "pressure", min = 10}
+            minable = {
+                mining_time = 30,
+                result = "quantum-teleporter-portal"
+            },
+            chargable_graphics = {
+                picture = {
+                    layers = {
+                        {
+                            filename = defaultFilename .. ".png",
+                            priority = "high",
+                            width = defaultIconSize,
+                            height = defaultIconSize,
+                            scale = (boxSize * 32 * 2) / defaultIconSize,
+                            shift = {0, 0}
+                        }
+                    }
+                }
+            },
+            resistances = {
+                LDAUtils.createResistance("fire", 70),
+                LDAUtils.createResistance("physical", 100),
+                LDAUtils.createResistance("impact", 100),
+                LDAUtils.createResistance("electric", 5),
+                LDAUtils.createResistance("explosion", 97),
+                LDAUtils.createResistance("laser", 100)
+            },
+            extra_props = {
+                icon_mipmaps = 4,
+                surface_conditions = {
+                    {property = "pressure", min = 10}
+                }
             },
             working_sound = {
                 sound = LDAUtils.getAudio(PATH .. "audio/portal", 0.45),

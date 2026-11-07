@@ -1,6 +1,6 @@
 {
     "name": "Quantum-Teleporter",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "title": "Quantum Teleporter",
     "author": "LUIS DAS ARTIMANAHS",
     "contact": "example@gmail.com",
@@ -8,9 +8,9 @@
     "description": "Objetivo desse mod para o jogo factorio e teleportar o jogador para qualquer lugar do mapa e dos planetas da dlc space age.",
     "factorio_version": "2.1",
     "dependencies": [
-        "base >= 2.1.23",
+        "base >= 2.1.24",
         "space-age",
-        "LDA-LIB >= 0.0.16"
+        "LDA-LIB >= 0.0.17"
     ],
     "license": "GNU General Public License v3.0",
     "thumbnail": "thumbnail.png",

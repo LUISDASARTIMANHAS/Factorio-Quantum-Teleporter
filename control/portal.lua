@@ -1,24 +1,24 @@
 -- control/portal.lua
 -- Lógica de eventos e ciclo de vida da Rede Quântica de Portais
--- Integração com LDA-LIB no runtime e registro de rede no storage.
+-- Integração com LDA-LIB no runtime via LDARuntime.network (>= 0.0.17).
 
-local LDARuntime = require("control.utils.lda-runtime")
-local PortalNetwork = require("control.utils.portal-network")
+local LDARuntime = require("__LDA-LIB__/runtime.init")
 local PortalGui = require("control.gui.portal-gui")
 
 local PORTAL_NAME = "quantum-teleporter-portal"
+local NETWORK_NAME = "portals"
 
 --- Varre todas as superfícies do jogo para sincronizar portais já existentes
 local function sync_existing_portals()
-    PortalNetwork.initStorage()
     if not game or not game.surfaces then return end
 
+    LDARuntime.network.cleanup(NETWORK_NAME)
     local count = 0
     for _, surface in pairs(game.surfaces) do
         local portals = surface.find_entities_filtered({name = PORTAL_NAME})
         for _, portal in ipairs(portals) do
             if LDARuntime.entity.isValid(portal) then
-                PortalNetwork.register(portal)
+                LDARuntime.network.register(NETWORK_NAME, portal)
                 count = count + 1
             end
         end
@@ -31,13 +31,11 @@ end
 -- =============================================================================
 
 script.on_init(function()
-    PortalNetwork.initStorage()
     sync_existing_portals()
     log("[Quantum-Teleporter] Rede de Portais Quânticos inicializada com sucesso.")
 end)
 
 script.on_configuration_changed(function(event)
-    PortalNetwork.initStorage()
     sync_existing_portals()
     log("[Quantum-Teleporter] Configuração alterada - rede de portais sincronizada.")
 end)
@@ -51,7 +49,7 @@ local function on_portal_created(event)
     if not entity or not entity.valid then return end
 
     if entity.name == PORTAL_NAME then
-        local entry = PortalNetwork.register(entity)
+        local entry = LDARuntime.network.register(NETWORK_NAME, entity)
         local player = LDARuntime.player.get(event.player_index)
         if player and entry then
             LDARuntime.player.notify(player, string.format("[Quantum Teleporter] %s conectado à rede quântica!", entry.name))
@@ -75,7 +73,7 @@ local function on_portal_removed(event)
     if not entity or not entity.valid then return end
 
     if entity.name == PORTAL_NAME then
-        PortalNetwork.unregister(entity)
+        LDARuntime.network.unregister(NETWORK_NAME, entity)
     end
 end
 
